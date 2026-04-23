@@ -4,11 +4,11 @@ Context for future Claude Code sessions working on this repository.
 
 ## Stack
 
-- **Framework:** Next.js 15 (App Router) with React 19
+- **Framework:** Next.js 16 (App Router) with React 19
 - **Language:** TypeScript (strict mode)
-- **Styling:** Tailwind CSS v3
+- **Styling:** Tailwind CSS v4
 - **Linting:** ESLint 9 (flat config, `next/core-web-vitals` + `next/typescript`)
-- **Runtime:** Node 20 (see `.nvmrc`)
+- **Runtime:** Node 24 LTS (see `.nvmrc`)
 - **Directory convention:** `src/` for application code; App Router lives in `src/app/`
 - **Package manager:** npm (lockfile: `package-lock.json`)
 
