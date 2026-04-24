@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Button, LinkButton } from "../ui/Button";
 
 export type CtaStepStatus = "done" | "open" | "upcoming";
 
@@ -11,6 +12,12 @@ export type CtaStep = {
   status: CtaStepStatus;
 };
 
+export type CtaAction = {
+  label: ReactNode;
+  /** If provided the affordance renders as an <a>; otherwise a <button>. */
+  href?: string;
+};
+
 type CtaPanelProps = {
   /** Pill-shaped eyebrow, eg. "April-Kurs · offen" — rendered with a sky dot. */
   eyebrow: string;
@@ -20,6 +27,11 @@ type CtaPanelProps = {
   body: ReactNode;
   /** Exactly four ordered steps. */
   steps: CtaStep[];
+  /**
+   * The conversion affordance for this panel. The accent (clay) button is
+   * the one warm moment per view, per AGENTS.md — it lives inside the panel.
+   */
+  action: CtaAction;
   /** Aria label for the CTA section landmark. */
   ariaLabel?: string;
 };
@@ -44,6 +56,7 @@ export function CtaPanel({
   title,
   body,
   steps,
+  action,
   ariaLabel = "Einstiegsablauf",
 }: CtaPanelProps) {
   return (
@@ -93,25 +106,39 @@ export function CtaPanel({
         </p>
       </div>
 
-      <ol className="relative z-10 flex flex-col gap-2" role="list">
-        {steps.map((step) => (
-          <li
-            key={step.n}
-            className={[stepBase, stepTone[step.status]].join(" ")}
-            style={{
-              padding: "16px 20px",
-              gridTemplateColumns: "56px 1fr 28px",
-            }}
-            aria-current={step.status === "open" ? "step" : undefined}
-          >
-            <span className="font-mono opacity-60" style={{ fontSize: 13 }}>
-              {step.n}
-            </span>
-            <span className="font-medium">{step.title}</span>
-            <span className="text-right opacity-80">{stepGlyph[step.status]}</span>
-          </li>
-        ))}
-      </ol>
+      <div className="relative z-10 flex flex-col gap-6">
+        <ol className="flex flex-col gap-2" role="list">
+          {steps.map((step) => (
+            <li
+              key={step.n}
+              className={[stepBase, stepTone[step.status]].join(" ")}
+              style={{
+                padding: "16px 20px",
+                gridTemplateColumns: "56px 1fr 28px",
+              }}
+              aria-current={step.status === "open" ? "step" : undefined}
+            >
+              <span className="font-mono opacity-60" style={{ fontSize: 13 }}>
+                {step.n}
+              </span>
+              <span className="font-medium">{step.title}</span>
+              <span className="text-right opacity-80">
+                {stepGlyph[step.status]}
+              </span>
+            </li>
+          ))}
+        </ol>
+
+        <div className="flex">
+          {action.href ? (
+            <LinkButton variant="accent" href={action.href}>
+              {action.label}
+            </LinkButton>
+          ) : (
+            <Button variant="accent">{action.label}</Button>
+          )}
+        </div>
+      </div>
     </section>
   );
 }

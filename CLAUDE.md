@@ -58,3 +58,12 @@ them unless the user explicitly asks:
 Runtime secrets belong in **Google Secret Manager** and are injected into the
 Cloud Run service, not committed to the repo. `.env.example` documents the
 expected variables. Use `.env.local` (gitignored) for local overrides.
+
+## Known limitations
+
+- **Duplicate Google Fonts request from the design kit.** The kit's
+  `dekorfabrik-design-kit/tokens/tokens.css` triggers a Google Fonts
+  `@import url(…)` that duplicates `next/font/google` loaded in
+  `src/app/layout.tsx`. Fix in design-kit v1.1 by removing the `@import`
+  from `tokens.css`. Until then, accept the duplicate request — the kit is
+  vendored immutable, so we don't edit it in this repo.

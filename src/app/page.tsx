@@ -1,6 +1,6 @@
 import { Pill } from "@/components/ui/Pill";
 import { Nav, type NavLink } from "@/components/ui/Nav";
-import { Button, LinkButton } from "@/components/ui/Button";
+import { LinkButton } from "@/components/ui/Button";
 import { CardCream } from "@/components/ui/CardCream";
 import { CardFeatureNavy } from "@/components/ui/CardFeatureNavy";
 import { CtaPanel, type CtaStep } from "@/components/sections/CtaPanel";
@@ -86,7 +86,7 @@ export default function HomePage() {
 
             <h1
               id="hero-title"
-              className="mt-6 font-display text-d3 font-normal text-balance text-navy-900 md:text-d2"
+              className="mt-6 font-display text-d4 font-normal text-balance text-navy-900 md:text-d3 lg:text-d2"
             >
               Aus einer Skizze wird eine saubere{" "}
               <em className="italic">Vektordatei.</em>
@@ -399,11 +399,8 @@ export default function HomePage() {
               </>
             }
             steps={ctaSteps}
+            action={{ label: "Auftrag freigeben", href: "/auftrag" }}
           />
-
-          <div className="mt-8 flex justify-center">
-            <Button variant="accent">Auftrag freigeben</Button>
-          </div>
         </section>
       </main>
 
