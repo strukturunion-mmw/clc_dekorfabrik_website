@@ -1,0 +1,116 @@
+// ============================================================
+// Dekorfabrik Design System — SCSS token mirror
+// Generated from tokens.css. Keep in sync if you edit the CSS.
+// ============================================================
+
+// ---------- Paper (canvas) ----------
+$paper-50:  #FCFAF5;
+$paper-100: #F7F3EA;
+$paper-200: #ECE5D4;
+$paper-300: #DCD2BB;
+
+// ---------- Navy ----------
+$navy-950: #060D20;
+$navy-900: #0A1430;
+$navy-800: #0D1B3D; // wordmark
+$navy-700: #162B55;
+$navy-600: #1F3E72;
+$navy-500: #2E5590;
+$navy-300: #7A95BE;
+$navy-200: #B2C2DA;
+
+// ---------- Azure ----------
+$azure-800: #153F6E;
+$azure-700: #1A5089;
+$azure-600: #1F5F9E; // df
+$azure-500: #2B73B6;
+$azure-400: #4A8ECB;
+$azure-300: #78ACDB;
+$azure-200: #B1CDE8;
+$azure-100: #DCE8F4;
+
+// ---------- Sky ----------
+$sky-700: #4A8AB5;
+$sky-600: #5C9CC8;
+$sky-500: #6BAED6; // logo square
+$sky-400: #8FC4E1;
+$sky-300: #B4D7EC;
+$sky-200: #D3E6F3;
+$sky-100: #EAF2FA;
+
+// ---------- Clay (warm CTA) ----------
+$clay-700: #9E3F1C;
+$clay-600: #BE5127;
+$clay-500: #D86A3D;
+$clay-400: #E18A62;
+$clay-300: #EBAB8C;
+$clay-200: #F4CFBC;
+$clay-100: #FAE6D9;
+
+// ---------- Lilac (rare) ----------
+$lilac-500: #8E8DC4;
+$lilac-300: #BDB9E0;
+$lilac-200: #D7D4EC;
+$lilac-100: #E8E6F4;
+
+// ---------- Ink (neutrals) ----------
+$ink-900: #0A0D14;
+$ink-800: #1A1E28;
+$ink-700: #2B2F3B;
+$ink-500: #5F6472;
+$ink-400: #898E9C;
+$ink-300: #B8BCC7;
+$ink-200: #D4D7DF;
+$ink-100: #E8EAEF;
+
+// ---------- Semantic ----------
+$surface-canvas: $paper-100;
+$surface-raised: $paper-50;
+$surface-sunken: $paper-200;
+$surface-dark: $navy-800;
+$surface-darker: $navy-950;
+$surface-hero: $clay-500;
+$surface-featured: $navy-800;
+$surface-cool: $sky-500;
+
+$fg-1: $navy-900;
+$fg-2: $navy-700;
+$fg-3: $ink-500;
+$fg-4: $ink-400;
+$fg-inverse-1: $paper-100;
+$fg-inverse-2: $navy-200;
+$fg-accent: $azure-600;
+
+// ---------- Fonts ----------
+$font-display: "DM Serif Display", "Instrument Serif", "Times New Roman", Georgia, serif;
+$font-serif:   "Instrument Serif", "DM Serif Display", Georgia, serif;
+$font-brand:   "Share", "Geist", ui-sans-serif, system-ui, sans-serif;
+$font-sans:    "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+$font-mono:    "Geist Mono", ui-monospace, "SFMono-Regular", "Roboto Mono", monospace;
+
+// ---------- Spacing ----------
+$space-1: 4px;  $space-2: 8px;  $space-3: 12px;
+$space-4: 16px; $space-5: 20px; $space-6: 24px; $space-8: 32px;
+$space-10: 40px; $space-12: 48px; $space-16: 64px; $space-20: 80px;
+$space-24: 96px; $space-32: 128px;
+
+// ---------- Radii ----------
+$radius-xs: 4px; $radius-sm: 8px; $radius-md: 12px;
+$radius-lg: 18px; $radius-xl: 28px; $radius-2xl: 40px;
+$radius-pill: 999px;
+
+// ---------- Shadows ----------
+$shadow-xs: 0 1px 2px rgba(13, 27, 61, 0.05);
+$shadow-sm: 0 2px 6px rgba(13, 27, 61, 0.07), 0 1px 2px rgba(13, 27, 61, 0.04);
+$shadow-md: 0 8px 20px rgba(13, 27, 61, 0.09), 0 2px 4px rgba(13, 27, 61, 0.04);
+$shadow-lg: 0 18px 40px rgba(13, 27, 61, 0.12), 0 4px 8px rgba(13, 27, 61, 0.06);
+$shadow-xl: 0 30px 70px rgba(13, 27, 61, 0.16), 0 8px 14px rgba(13, 27, 61, 0.07);
+$shadow-paper: 0 12px 24px rgba(6, 13, 32, 0.22), 0 2px 4px rgba(6, 13, 32, 0.12);
+
+// ---------- Motion ----------
+$ease-standard: cubic-bezier(0.2, 0, 0, 1);
+$ease-emphasis: cubic-bezier(0.3, 0, 0, 1);
+$ease-out-soft: cubic-bezier(0.33, 1, 0.68, 1);
+$dur-fast: 120ms;
+$dur-base: 220ms;
+$dur-slow: 420ms;

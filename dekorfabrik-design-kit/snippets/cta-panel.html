@@ -1,0 +1,121 @@
+<!--
+  Dekorfabrik — CTA panel (Clay)
+  Load tokens/tokens.css before using.
+
+  The ONE warm moment per page. Place near the bottom, above the footer.
+  Left: italic-pivot headline + supporting body.
+  Right: numbered step list as stacked pills (active step is clay-700).
+  Soft clay-400 radial glow in the bottom-right corner.
+-->
+
+<style>
+  .cta-panel {
+    position: relative;
+    background: var(--clay-500);
+    color: var(--paper-100);
+    border-radius: var(--radius-xl);
+    padding: 48px 44px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    overflow: hidden;
+  }
+  .cta-panel::before {
+    content: '';
+    position: absolute;
+    right: -80px; bottom: -80px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: var(--clay-400);
+    opacity: 0.6;
+  }
+  .cta-left { position: relative; z-index: 1; }
+  .cta-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 26px; padding: 0 12px;
+    border-radius: 999px;
+    background: var(--navy-900);
+    color: var(--paper-100);
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 500;
+  }
+  .cta-eyebrow::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--sky-400);
+  }
+  .cta-title {
+    font-family: var(--font-display);
+    font-size: 58px; line-height: 1.02;
+    letter-spacing: -0.025em;
+    font-weight: 400;
+    margin: 18px 0 16px;
+    color: var(--paper-100);
+    text-wrap: balance;
+  }
+  .cta-title em { font-style: italic; }
+  .cta-body {
+    font-family: var(--font-sans);
+    font-size: 16px; line-height: 1.5;
+    color: var(--clay-100);
+    max-width: 420px;
+  }
+  .cta-body strong { color: var(--paper-100); font-weight: 500; }
+
+  .cta-right {
+    display: flex; flex-direction: column; gap: 8px;
+    position: relative; z-index: 1;
+  }
+  .cta-step {
+    display: grid;
+    grid-template-columns: 56px 1fr 28px;
+    align-items: center;
+    padding: 16px 20px;
+    border-radius: 999px;
+    background: var(--navy-900);
+    color: var(--paper-100);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    cursor: pointer;
+    transition: background var(--dur-base);
+  }
+  .cta-step.open { background: var(--clay-700); }
+  .cta-step.done .cta-step-i { color: var(--sky-400); }
+  .cta-step-n { font-family: var(--font-mono); opacity: 0.6; font-size: 13px; }
+  .cta-step-t { font-weight: 500; }
+  .cta-step-i { text-align: right; opacity: 0.8; }
+</style>
+
+<section class="cta-panel">
+  <div class="cta-left">
+    <span class="cta-eyebrow">April-Kurs · offen</span>
+    <h2 class="cta-title">Werden Sie <em>Kunde.</em> Von der ersten Datei bis zur fertigen Lieferung.</h2>
+    <p class="cta-body">
+      Strukturierter Ablauf, echte Handarbeit, klare Preise. Kein Abonnement, keine Wartezeit.
+      <strong>412 Kunden</strong> haben 2026 bereits geliefert.
+    </p>
+  </div>
+  <div class="cta-right">
+    <div class="cta-step done">
+      <span class="cta-step-n">01</span>
+      <span class="cta-step-t">Grundlagen</span>
+      <span class="cta-step-i">✓</span>
+    </div>
+    <div class="cta-step open">
+      <span class="cta-step-n">02</span>
+      <span class="cta-step-t">Datei hochladen</span>
+      <span class="cta-step-i"></span>
+    </div>
+    <div class="cta-step">
+      <span class="cta-step-n">03</span>
+      <span class="cta-step-t">Format wählen</span>
+      <span class="cta-step-i">↓</span>
+    </div>
+    <div class="cta-step">
+      <span class="cta-step-n">04</span>
+      <span class="cta-step-t">Freigabe &amp; Versand</span>
+      <span class="cta-step-i">↓</span>
+    </div>
+  </div>
+</section>

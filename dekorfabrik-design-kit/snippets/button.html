@@ -1,0 +1,71 @@
+<!--
+  Dekorfabrik — Button snippet
+  Load tokens/tokens.css before using.
+
+  Five button variants follow. Each is 44px tall (primary) or 36px small.
+  Always pill-shaped. Background shifts one shade on hover, never the fg.
+-->
+
+<style>
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    height: 44px; padding: 0 20px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-sans);
+    font-size: 14px; font-weight: 500;
+    border: none; cursor: pointer;
+    transition: background var(--dur-base) var(--ease-standard);
+    white-space: nowrap;
+  }
+  .btn:active { transform: translateY(1px); }
+
+  .btn-sm { height: 36px; padding: 0 16px; font-size: 13px; }
+
+  /* Primary — site-wide actions, "Anmelden" */
+  .btn-primary { background: var(--navy-900); color: var(--paper-100); }
+  .btn-primary:hover { background: var(--navy-700); }
+
+  /* Brand — service starters, "Datei hochladen" */
+  .btn-brand { background: var(--azure-600); color: var(--paper-50); }
+  .btn-brand:hover { background: var(--azure-700); }
+
+  /* Accent — the conversion moment. Use at most once per view. */
+  .btn-accent { background: var(--clay-500); color: var(--paper-50); }
+  .btn-accent:hover { background: var(--clay-600); }
+
+  /* Secondary — counterpart to primary */
+  .btn-secondary {
+    background: transparent; color: var(--navy-900);
+    border: 1px solid rgba(13, 27, 61, 0.28);
+  }
+  .btn-secondary:hover { background: rgba(13, 27, 61, 0.05); }
+
+  /* Ghost — tertiary */
+  .btn-ghost { background: transparent; color: var(--navy-900); }
+  .btn-ghost:hover { background: rgba(13, 27, 61, 0.05); }
+
+  /* Focus — 2px clay ring, 2px offset */
+  .btn:focus-visible {
+    outline: 2px solid var(--clay-500);
+    outline-offset: 2px;
+  }
+</style>
+
+<!-- Primary (site-wide actions) -->
+<button class="btn btn-primary">Jetzt starten →</button>
+
+<!-- Brand (upload, convert, start a flow) -->
+<button class="btn btn-brand">Datei hochladen</button>
+
+<!-- Accent (conversion — use once per view) -->
+<button class="btn btn-accent">Auftrag freigeben</button>
+
+<!-- Secondary -->
+<button class="btn btn-secondary">Beispiele ansehen</button>
+
+<!-- Ghost -->
+<button class="btn btn-ghost">Mehr lesen</button>
+
+<!-- Small variants -->
+<button class="btn btn-sm btn-primary">Download</button>
+<button class="btn btn-sm btn-brand">Kopieren</button>
