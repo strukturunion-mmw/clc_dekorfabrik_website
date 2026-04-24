@@ -1,1 +1,170 @@
+/*
+  Import the kit tokens first so the Google Fonts `@import url(…)` at the top
+  of tokens.css stays a valid CSS @import (must precede non-@import rules).
+  next/font in layout.tsx is the real font loader — we accept a small duplicate
+  request from the kit's @import rather than edit tokens.css.
+*/
+@import "../../dekorfabrik-design-kit/tokens/tokens.css";
 @import "tailwindcss";
+
+/*
+  Override the font-stack tokens from the kit to lead with the CSS variables
+  produced by `next/font/google` (see src/app/layout.tsx). We do NOT edit
+  tokens.css itself — the kit is vendored and must stay immutable.
+  Note: tokens.css contains a Google Fonts `@import url(...)` that still
+  fires. This is an accepted small duplicate request; next/font remains the
+  primary loader (preconnect, self-hosting, display: swap).
+*/
+:root {
+  --font-display: var(--font-dm-serif-display), "Instrument Serif", "Times New Roman", Georgia, serif;
+  --font-serif:   var(--font-instrument-serif), "DM Serif Display", Georgia, serif;
+  --font-brand:   var(--font-share), "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    var(--font-geist-mono), ui-monospace, "SFMono-Regular", "Roboto Mono", monospace;
+}
+
+/*
+  Map every Dekorfabrik token onto Tailwind v4 theme keys using @theme inline
+  so utilities (`bg-navy-800`, `text-d1`, `rounded-xl`, `shadow-paper` …)
+  resolve to the existing CSS custom properties from tokens.css.
+*/
+@theme inline {
+  /* Colors — paper */
+  --color-paper-50:  var(--paper-50);
+  --color-paper-100: var(--paper-100);
+  --color-paper-200: var(--paper-200);
+  --color-paper-300: var(--paper-300);
+
+  /* Colors — navy */
+  --color-navy-200: var(--navy-200);
+  --color-navy-300: var(--navy-300);
+  --color-navy-500: var(--navy-500);
+  --color-navy-600: var(--navy-600);
+  --color-navy-700: var(--navy-700);
+  --color-navy-800: var(--navy-800);
+  --color-navy-900: var(--navy-900);
+  --color-navy-950: var(--navy-950);
+
+  /* Colors — azure */
+  --color-azure-100: var(--azure-100);
+  --color-azure-200: var(--azure-200);
+  --color-azure-300: var(--azure-300);
+  --color-azure-400: var(--azure-400);
+  --color-azure-500: var(--azure-500);
+  --color-azure-600: var(--azure-600);
+  --color-azure-700: var(--azure-700);
+  --color-azure-800: var(--azure-800);
+
+  /* Colors — sky */
+  --color-sky-100: var(--sky-100);
+  --color-sky-200: var(--sky-200);
+  --color-sky-300: var(--sky-300);
+  --color-sky-400: var(--sky-400);
+  --color-sky-500: var(--sky-500);
+  --color-sky-600: var(--sky-600);
+  --color-sky-700: var(--sky-700);
+
+  /* Colors — clay */
+  --color-clay-100: var(--clay-100);
+  --color-clay-200: var(--clay-200);
+  --color-clay-300: var(--clay-300);
+  --color-clay-400: var(--clay-400);
+  --color-clay-500: var(--clay-500);
+  --color-clay-600: var(--clay-600);
+  --color-clay-700: var(--clay-700);
+
+  /* Colors — lilac */
+  --color-lilac-100: var(--lilac-100);
+  --color-lilac-200: var(--lilac-200);
+  --color-lilac-300: var(--lilac-300);
+  --color-lilac-500: var(--lilac-500);
+
+  /* Colors — ink */
+  --color-ink-100: var(--ink-100);
+  --color-ink-200: var(--ink-200);
+  --color-ink-300: var(--ink-300);
+  --color-ink-400: var(--ink-400);
+  --color-ink-500: var(--ink-500);
+  --color-ink-700: var(--ink-700);
+  --color-ink-800: var(--ink-800);
+  --color-ink-900: var(--ink-900);
+
+  /* Fonts */
+  --font-display: var(--font-display);
+  --font-serif:   var(--font-serif);
+  --font-brand:   var(--font-brand);
+  --font-sans:    var(--font-sans);
+  --font-mono:    var(--font-mono);
+
+  /* Body / UI type scale (from tokens.css) */
+  --text-xs: 12px;
+  --text-xs--line-height: 1.4;
+  --text-sm: 14px;
+  --text-sm--line-height: 1.45;
+  --text-base: 16px;
+  --text-base--line-height: 1.55;
+  --text-md: 18px;
+  --text-md--line-height: 1.5;
+  --text-lg: 22px;
+  --text-lg--line-height: 1.4;
+  --text-xl: 28px;
+  --text-xl--line-height: 1.3;
+
+  /* Display type scale (editorial) */
+  --text-d5: 32px;
+  --text-d5--line-height: 1.15;
+  --text-d5--letter-spacing: -0.02em;
+  --text-d4: 40px;
+  --text-d4--line-height: 1.1;
+  --text-d4--letter-spacing: -0.02em;
+  --text-d3: 52px;
+  --text-d3--line-height: 1.05;
+  --text-d3--letter-spacing: -0.02em;
+  --text-d2: 68px;
+  --text-d2--line-height: 1.02;
+  --text-d2--letter-spacing: -0.02em;
+  --text-d1: 88px;
+  --text-d1--line-height: 0.98;
+  --text-d1--letter-spacing: -0.02em;
+
+  /* Letter spacing */
+  --tracking-tight:  -0.02em;
+  --tracking-wide:   0.04em;
+  --tracking-wider:  0.12em;
+  --tracking-brand:  0.14em;
+
+  /* Border radius */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   18px;
+  --radius-xl:   28px;
+  --radius-2xl:  40px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-paper: var(--shadow-paper);
+
+  /* Motion */
+  --ease-standard: var(--ease-standard);
+  --ease-emphasis: var(--ease-emphasis);
+  --ease-out-soft: var(--ease-out-soft);
+  --duration-fast: var(--dur-fast);
+  --duration-base: var(--dur-base);
+  --duration-slow: var(--dur-slow);
+
+  /* Content widths (nav + footer + sections share 1120px) */
+  --container-content: 1120px;
+  --container-hero:    1200px;
+}
+
+/* Kit expects the canvas to be paper, not white. */
+html, body {
+  background: var(--surface-canvas);
+  color: var(--fg-1);
+}
