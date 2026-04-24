@@ -1,0 +1,40 @@
+<!--
+  Dekorfabrik — Pill tag snippet
+  Load tokens/tokens.css before using.
+
+  Five tones, one "dot" modifier for status pills.
+  26px tall, pill-shaped, 12px font. Never stack >3 pills in a row.
+-->
+
+<style>
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 26px;
+    padding: 0 12px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-sans);
+    font-size: 12px; font-weight: 500;
+  }
+  .pill.p-sky     { background: var(--sky-300);    color: var(--navy-900); }
+  .pill.p-navy    { background: var(--navy-800);   color: var(--paper-100); }
+  .pill.p-azure   { background: var(--azure-600);  color: var(--paper-50); }
+  .pill.p-clay    { background: var(--clay-500);   color: var(--paper-50); }
+  .pill.p-neutral { background: var(--ink-100);    color: var(--navy-900); }
+  .pill.p-outline { background: transparent; color: var(--navy-900); border: 1px solid rgba(13,27,61,0.28); }
+
+  /* Status dot — useful for "open / full / closed" signals */
+  .pill.p-dot::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.7;
+  }
+</style>
+
+<span class="pill p-sky">Vektorisierung</span>
+<span class="pill p-navy">Stickdatei</span>
+<span class="pill p-azure">Leitfaden</span>
+<span class="pill p-clay p-dot">April · offen</span>
+<span class="pill p-neutral">Tutorial</span>
+<span class="pill p-outline">Freebie</span>

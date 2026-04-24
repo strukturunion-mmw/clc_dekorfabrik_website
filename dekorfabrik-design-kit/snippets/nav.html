@@ -1,0 +1,78 @@
+<!--
+  Dekorfabrik — Nav pill snippet
+  Load tokens/tokens.css + button.html's styles before using.
+
+  Floating cream-tinted pill, max-width 1120px, sticky at top: 18px.
+  Holds brand lockup (sky mark + Share wordmark), link row, two CTAs.
+  Footer uses matching max-width 1120px to align vertically with the nav edge.
+-->
+
+<style>
+  .nav-wrap {
+    padding: 18px 0 0;
+    position: sticky;
+    top: 18px;
+    z-index: 30;
+  }
+  .nav-pill {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 10px 14px 10px 18px;
+    background: rgba(252, 250, 245, 0.88);
+    backdrop-filter: blur(12px);
+    border-radius: 999px;
+    border: 1px solid rgba(13, 27, 61, 0.08);
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--font-brand);
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--navy-800);
+    text-decoration: none;
+  }
+  .nav-mark {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    background: var(--sky-500);
+    color: var(--azure-600);
+    font-family: var(--font-brand);
+    font-size: 16px;
+    font-weight: 400;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links a {
+    padding: 8px 16px;
+    border-radius: 999px;
+    color: var(--navy-700);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: 14px; font-weight: 500;
+  }
+  .nav-links a:hover { background: rgba(13, 27, 61, 0.05); }
+  .nav-links a.on { background: var(--navy-900); color: var(--paper-100); }
+  .nav-actions { display: flex; gap: 8px; }
+</style>
+
+<div class="nav-wrap">
+  <nav class="nav-pill">
+    <a class="nav-brand" href="/">
+      <span class="nav-mark">df</span>
+      <span>dekorfabrik.de</span>
+    </a>
+    <div class="nav-links">
+      <a class="on" href="/journal">Journal</a>
+      <a href="/dienste">Dienste</a>
+      <a href="/freebies">Freebies</a>
+      <a href="/faq">FAQ</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-secondary btn-sm">Anmelden</button>
+      <button class="btn btn-brand btn-sm">Datei hochladen →</button>
+    </div>
+  </nav>
+</div>

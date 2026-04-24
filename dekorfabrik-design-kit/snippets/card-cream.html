@@ -1,0 +1,79 @@
+<!--
+  Dekorfabrik — Cream card (default variant)
+  Load tokens/tokens.css before using.
+
+  This is the default blog/journal card.
+  Eyebrow → italic-pivot headline → body → meta + arrow chip.
+  Hover: translateY(-2px) + shadow upgrade. Arrow chip shifts right+up.
+-->
+
+<style>
+  .card-cream {
+    background: var(--paper-50);
+    color: var(--navy-900);
+    border: 1px solid rgba(13, 27, 61, 0.08);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 22px 24px 20px;
+    display: flex; flex-direction: column;
+    min-height: 280px;
+    max-width: 420px;
+    cursor: pointer;
+    transition: transform var(--dur-base) cubic-bezier(0.33, 1, 0.68, 1),
+                box-shadow var(--dur-base);
+    position: relative;
+  }
+  .card-cream:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+
+  .card-cream .meta {
+    font-family: var(--font-brand);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+  }
+  .card-cream .title {
+    font-family: var(--font-display);
+    font-size: 28px; line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+    margin: 14px 0 10px;
+    text-wrap: balance;
+    color: var(--navy-900);
+  }
+  .card-cream .title em { font-style: italic; }
+  .card-cream .body {
+    font-family: var(--font-sans);
+    font-size: 14px; line-height: 1.5;
+    color: var(--navy-700);
+    margin: 0 0 20px;
+  }
+  .card-cream .foot {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-sans);
+    font-size: 12px; color: var(--ink-500);
+    margin-top: auto;
+    padding-top: 16px;
+  }
+  .arrow-chip {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(13, 27, 61, 0.28);
+    color: var(--navy-900);
+    transition: transform var(--dur-base);
+  }
+  .card-cream:hover .arrow-chip { transform: translate(2px, -2px); }
+</style>
+
+<article class="card-cream">
+  <div class="meta">AI für Designer · 12. Apr 2026</div>
+  <h3 class="title">Warum Ihre AI-Logos selten <em>druckfertig</em> sind.</h3>
+  <p class="body">Raster-Export, falsche Farben, fehlende Pfade. Ein Überblick, was AI-Generatoren (noch) nicht können — und wie wir Ihre Datei trotzdem rettungsfähig machen.</p>
+  <div class="foot">
+    <span>5 min · Leitfaden</span>
+    <span class="arrow-chip">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>
+    </span>
+  </div>
+</article>

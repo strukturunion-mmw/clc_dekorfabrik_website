@@ -1,0 +1,330 @@
+/* ============================================================
+   Dekorfabrik Design System — Core Tokens
+   Colors, type, spacing, radii, shadows, motion.
+   Load this file first. Everything downstream references these vars.
+   ============================================================ */
+
+/* ---------- Fonts ----------
+   Share — the brand/logo font (used for the wordmark + UI small caps).
+   DM Serif Display / Instrument Serif — editorial display.
+   Geist — neutral body sans.
+   Geist Mono — code / specs. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Serif:ital@0;1&family=Share:ital,wght@0,400;0,700;1,400;1,700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ========== PRIMITIVE COLOR TOKENS ==========
+     Blue-forward palette derived from the Dekorfabrik 2-tone logo:
+     - Sky (logo square tint)
+     - Azure (df lettering)
+     - Navy (wordmark) */
+
+  /* Paper — warm-ivory canvas that reads cleanly with blues */
+  --paper-50:  #FCFAF5;
+  --paper-100: #F7F3EA;   /* default page bg — slightly cooler cream */
+  --paper-200: #ECE5D4;
+  --paper-300: #DCD2BB;
+
+  /* Navy — primary dark accent (feature tiles, dark surfaces) — from wordmark */
+  --navy-950: #060D20;
+  --navy-900: #0A1430;
+  --navy-800: #0D1B3D;   /* wordmark color — featured tile */
+  --navy-700: #162B55;
+  --navy-600: #1F3E72;
+  --navy-500: #2E5590;
+  --navy-300: #7A95BE;
+  --navy-200: #B2C2DA;
+
+  /* Azure — mid brand blue (from "df" lettering) */
+  --azure-800: #153F6E;
+  --azure-700: #1A5089;
+  --azure-600: #1F5F9E;   /* exact logo df-blue */
+  --azure-500: #2B73B6;
+  --azure-400: #4A8ECB;
+  --azure-300: #78ACDB;
+  --azure-200: #B1CDE8;
+  --azure-100: #DCE8F4;
+
+  /* Sky — light blue tint (from logo square background) */
+  --sky-700: #4A8AB5;
+  --sky-600: #5C9CC8;
+  --sky-500: #6BAED6;   /* exact logo square fill — editorial accent tile */
+  --sky-400: #8FC4E1;
+  --sky-300: #B4D7EC;
+  --sky-200: #D3E6F3;
+  --sky-100: #EAF2FA;
+
+  /* Clay — the ONE warm accent, used for primary CTA & hero panel.
+     A muted terracotta — quieter than pure orange so it coexists with navy. */
+  --clay-700: #9E3F1C;
+  --clay-600: #BE5127;
+  --clay-500: #D86A3D;   /* primary CTA / hero panel */
+  --clay-400: #E18A62;
+  --clay-300: #EBAB8C;
+  --clay-200: #F4CFBC;
+  --clay-100: #FAE6D9;
+
+  /* Lilac — rare, for system/code tiles only */
+  --lilac-500: #8E8DC4;
+  --lilac-300: #BDB9E0;
+  --lilac-200: #D7D4EC;
+  --lilac-100: #E8E6F4;
+
+  /* Ink — neutral near-black (warm-neutral, keyed to paper) */
+  --ink-900: #0A0D14;
+  --ink-800: #1A1E28;
+  --ink-700: #2B2F3B;
+  --ink-500: #5F6472;
+  --ink-400: #898E9C;
+  --ink-300: #B8BCC7;
+  --ink-200: #D4D7DF;
+  --ink-100: #E8EAEF;
+
+  /* Semantic signal colors */
+  --signal-success: #2E7F5B;  /* cool green */
+  --signal-warn:    #D8A63D;  /* muted amber */
+  --signal-error:   --clay-700;
+
+  /* ========== SEMANTIC COLOR TOKENS ==========
+     Use these in components. */
+
+  /* Surfaces */
+  --surface-canvas:   var(--paper-100);
+  --surface-raised:   var(--paper-50);
+  --surface-sunken:   var(--paper-200);
+  --surface-dark:     var(--navy-800);
+  --surface-darker:   var(--navy-950);
+  --surface-hero:     var(--clay-500);
+  --surface-featured: var(--navy-800);
+  --surface-cool:     var(--sky-500);
+
+  /* Foreground */
+  --fg-1: var(--navy-900);           /* primary text — cool near-black */
+  --fg-2: var(--navy-700);
+  --fg-3: var(--ink-500);
+  --fg-4: var(--ink-400);
+  --fg-inverse-1: var(--paper-100);
+  --fg-inverse-2: var(--navy-200);
+  --fg-accent: var(--azure-600);     /* link color */
+
+  /* Borders */
+  --border-subtle:   rgba(13, 27, 61, 0.08);
+  --border-default:  rgba(13, 27, 61, 0.14);
+  --border-strong:   rgba(13, 27, 61, 0.28);
+  --border-inverse:  rgba(247, 243, 234, 0.18);
+
+  /* Interactive */
+  --action-primary-bg:       var(--navy-900);
+  --action-primary-fg:       var(--paper-100);
+  --action-primary-hover-bg: var(--navy-700);
+
+  --action-secondary-bg:       transparent;
+  --action-secondary-fg:       var(--navy-900);
+  --action-secondary-border:   var(--border-strong);
+  --action-secondary-hover-bg: rgba(13,27,61,0.05);
+
+  --action-accent-bg:       var(--clay-500);
+  --action-accent-fg:       var(--paper-50);
+  --action-accent-hover-bg: var(--clay-600);
+
+  --action-brand-bg:        var(--azure-600);  /* brand-blue CTA (uploads etc) */
+  --action-brand-fg:        var(--paper-50);
+  --action-brand-hover-bg:  var(--azure-700);
+
+  /* Tag pill colors */
+  --tag-sky-bg: var(--sky-300);
+  --tag-sky-fg: var(--navy-900);
+  --tag-navy-bg: var(--navy-800);
+  --tag-navy-fg: var(--paper-100);
+  --tag-azure-bg: var(--azure-600);
+  --tag-azure-fg: var(--paper-50);
+  --tag-clay-bg: var(--clay-500);
+  --tag-clay-fg: var(--paper-50);
+  --tag-neutral-bg: var(--ink-100);
+  --tag-neutral-fg: var(--navy-900);
+
+
+  /* ========== TYPOGRAPHY ========== */
+
+  --font-display: "DM Serif Display", "Instrument Serif", "Times New Roman", Georgia, serif;
+  --font-serif:   "Instrument Serif", "DM Serif Display", Georgia, serif;
+  --font-brand:   "Share", "Geist", ui-sans-serif, system-ui, sans-serif; /* for wordmark + small-caps eyebrows */
+  --font-sans:    "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    "Geist Mono", ui-monospace, "SFMono-Regular", "Roboto Mono", monospace;
+
+  --fs-xs:   12px;   --lh-xs: 1.4;
+  --fs-sm:   14px;   --lh-sm: 1.45;
+  --fs-base: 16px;   --lh-base: 1.55;
+  --fs-md:   18px;   --lh-md: 1.5;
+  --fs-lg:   22px;   --lh-lg: 1.4;
+  --fs-xl:   28px;   --lh-xl: 1.3;
+
+  --fs-d1: 88px;   --lh-d1: 0.98;
+  --fs-d2: 68px;   --lh-d2: 1.02;
+  --fs-d3: 52px;   --lh-d3: 1.05;
+  --fs-d4: 40px;   --lh-d4: 1.1;
+  --fs-d5: 32px;   --lh-d5: 1.15;
+
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold: 600;
+  --fw-bold:    700;
+
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.04em;
+  --tracking-wider:  0.12em;
+
+  /* Spacing */
+  --space-0: 0;  --space-1: 4px;  --space-2: 8px;  --space-3: 12px;
+  --space-4: 16px; --space-5: 20px; --space-6: 24px; --space-8: 32px;
+  --space-10: 40px; --space-12: 48px; --space-16: 64px; --space-20: 80px;
+  --space-24: 96px; --space-32: 128px;
+
+  /* Radii */
+  --radius-xs: 4px;  --radius-sm: 8px;  --radius-md: 12px;
+  --radius-lg: 18px; --radius-xl: 28px; --radius-2xl: 40px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(13, 27, 61, 0.05);
+  --shadow-sm: 0 2px 6px rgba(13, 27, 61, 0.07), 0 1px 2px rgba(13, 27, 61, 0.04);
+  --shadow-md: 0 8px 20px rgba(13, 27, 61, 0.09), 0 2px 4px rgba(13, 27, 61, 0.04);
+  --shadow-lg: 0 18px 40px rgba(13, 27, 61, 0.12), 0 4px 8px rgba(13, 27, 61, 0.06);
+  --shadow-xl: 0 30px 70px rgba(13, 27, 61, 0.16), 0 8px 14px rgba(13, 27, 61, 0.07);
+  --shadow-paper: 0 12px 24px rgba(6, 13, 32, 0.22), 0 2px 4px rgba(6, 13, 32, 0.12);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasis: cubic-bezier(0.3, 0, 0, 1);
+  --ease-out-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --dur-fast: 120ms;  --dur-base: 220ms;  --dur-slow: 420ms;
+  --dur-marquee: 40s;
+}
+
+
+/* ============================================================
+   SEMANTIC TYPE STYLES
+   ============================================================ */
+
+.t-eyebrow {
+  font-family: var(--font-brand);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.t-meta {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  color: var(--fg-3);
+}
+
+.t-body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  font-weight: var(--fw-regular);
+  color: var(--fg-1);
+  text-wrap: pretty;
+}
+
+.t-body-lg {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-md);
+  color: var(--fg-2);
+}
+
+.t-h1, .t-display-1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-d1);
+  line-height: var(--lh-d1);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+  text-wrap: balance;
+}
+
+.t-h2, .t-display-2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-d2);
+  line-height: var(--lh-d2);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+  text-wrap: balance;
+}
+
+.t-h3 {
+  font-family: var(--font-display);
+  font-size: var(--fs-d3);
+  line-height: var(--lh-d3);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+  text-wrap: balance;
+}
+
+.t-h4 {
+  font-family: var(--font-display);
+  font-size: var(--fs-d4);
+  line-height: var(--lh-d4);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-tight);
+}
+
+.t-h5 {
+  font-family: var(--font-display);
+  font-size: var(--fs-d5);
+  line-height: var(--lh-d5);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-tight);
+}
+
+.t-card-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-xl);
+  font-weight: var(--fw-regular);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+  text-wrap: balance;
+}
+
+.t-wordmark {
+  font-family: var(--font-brand);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.01em;
+  color: var(--navy-800);
+}
+
+.t-code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--fg-2);
+}
+
+.t-em { font-style: italic; }
+
+
+/* ============================================================
+   UTILITY BASE
+   ============================================================ */
+html, body {
+  background: var(--surface-canvas);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--sky-300);
+  color: var(--navy-900);
+}

@@ -1,0 +1,100 @@
+<!--
+  Dekorfabrik — Feature tile (navy) with paper-stack sub-cards
+  Load tokens/tokens.css before using.
+
+  The signature hero element.
+  Navy panel with TWO floating paper sub-cards (cream + sky),
+  each rotated a few degrees. Paper shadow is STRONGER than default.
+  Big serif display metric bottom-left, wide-tracked label bottom-right.
+-->
+
+<style>
+  .feature-tile {
+    position: relative;
+    background: var(--navy-800);
+    color: var(--paper-100);
+    border-radius: var(--radius-xl);
+    padding: 26px;
+    min-height: 440px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+  .feature-eyebrow {
+    font-family: var(--font-brand);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--navy-200);
+  }
+  .feature-arrow {
+    position: absolute; top: 22px; right: 22px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(247, 243, 234, 0.08);
+    border: 1px solid rgba(247, 243, 234, 0.22);
+    color: var(--paper-100);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* The floating paper sub-cards — this is the signature motif */
+  .paper-card {
+    position: absolute;
+    background: var(--paper-50);
+    color: var(--navy-900);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    box-shadow: var(--shadow-paper);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 15px; line-height: 1.4;
+    max-width: 300px;
+  }
+  .paper-card .paper-lbl {
+    font-family: var(--font-brand);
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+    margin-bottom: 6px;
+  }
+  .paper-card.draft    { top: 100px; left: 24px;  transform: rotate(-4deg); }
+  .paper-card.rewrite  { top: 210px; left: 140px; background: var(--sky-500); color: var(--navy-900); transform: rotate(3deg); }
+
+  .feature-metric {
+    position: absolute; bottom: 26px; left: 26px;
+    font-family: var(--font-display);
+    font-size: 56px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--paper-100);
+  }
+  .feature-metric-label {
+    position: absolute; bottom: 26px; right: 26px;
+    font-family: var(--font-brand);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--navy-200);
+    text-align: right;
+  }
+</style>
+
+<article class="feature-tile">
+  <div class="feature-eyebrow">Featured · No. 042 / Story craft</div>
+  <span class="feature-arrow">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M8 7h9v9"/></svg>
+  </span>
+
+  <div class="paper-card draft">
+    <div class="paper-lbl">Original · 300 dpi</div>
+    "Raster-PNG, unsauber skaliert — nicht druckfähig."
+  </div>
+  <div class="paper-card rewrite">
+    <div class="paper-lbl">Vektor · SVG</div>
+    "Handgezogene Kurven. Skaliert auf jede Plakatgröße."
+  </div>
+
+  <div class="feature-metric">24h</div>
+  <div class="feature-metric-label">Lieferzeit<br/>Standard-Auftrag</div>
+</article>
