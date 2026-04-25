@@ -71,15 +71,19 @@ export default function HomePage() {
       </a>
 
       <SiteHeader>
-        <Nav links={navLinks} />
-        <Marquee items={marqueeItems} />
+        <div className="mx-auto w-full max-w-content px-6">
+          <Nav links={navLinks} />
+        </div>
+        <div className="hidden md:block">
+          <Marquee items={marqueeItems} />
+        </div>
       </SiteHeader>
 
       <main id="hauptinhalt">
         {/* Hero — shares max-w-content (1120px) with every other section so
             nav / marquee / hero / grid / footer all align on the same column. */}
         <section
-          className="mx-auto grid max-w-content items-start gap-10 px-6 pt-16 pb-24 lg:grid-cols-2"
+          className="mx-auto grid max-w-content items-start gap-10 px-6 pt-10 pb-20 lg:grid-cols-2 lg:pt-12 lg:pb-24"
           aria-labelledby="hero-title"
         >
           <div>

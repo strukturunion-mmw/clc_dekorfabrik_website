@@ -15,8 +15,8 @@ type SiteHeaderProps = {
 export function SiteHeader({ children }: SiteHeaderProps) {
   return (
     <header
-      className="sticky z-30 flex flex-col gap-4 bg-paper-100"
-      style={{ top: 0, paddingTop: 18 }}
+      className="sticky z-30 flex flex-col gap-3 bg-paper-100"
+      style={{ top: 0, paddingTop: 14 }}
     >
       {children}
     </header>
