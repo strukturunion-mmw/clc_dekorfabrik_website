@@ -1,6 +1,6 @@
 # Dekorfabrik Design Kit
 
-**Version 1.0 · blue-palette · April 2026**
+**Version 1.0.1 · blue-palette · April 2026**
 
 This package is the portable design kit for **dekorfabrik.de**. Drop it into a new website project (Next.js, Astro, Nuxt, plain HTML — it doesn't care) and you get the full Dekorfabrik visual system: tokens, fonts, logos, and ready-to-paste component snippets.
 
@@ -59,7 +59,7 @@ module.exports = {
 
 ### 2. Load the fonts
 
-`tokens.css` auto-imports the Google Font substitutes (Share, DM Serif Display, Instrument Serif, Geist, Geist Mono) at the top of the file. If you have licensed fonts, see `fonts/README.md` for how to swap them in one place.
+From v1.0.1 the kit no longer ships a Google Fonts `@import`. You load the five families (Share, DM Serif Display, Instrument Serif, Geist, Geist Mono) yourself — with `next/font/google` in Next.js, `@fontsource/*` packages in Astro/Nuxt/Vite, or a `<link>` / `@import` in plain HTML. See `fonts/README.md` for per-stack recipes and for how to swap in licensed fonts later.
 
 ### 3. Drop in the logo
 

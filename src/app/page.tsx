@@ -6,6 +6,7 @@ import { CardFeatureNavy } from "@/components/ui/CardFeatureNavy";
 import { CtaPanel, type CtaStep } from "@/components/sections/CtaPanel";
 import { Marquee } from "@/components/sections/Marquee";
 import { Footer } from "@/components/sections/Footer";
+import { SiteHeader } from "@/components/sections/SiteHeader";
 
 const navLinks: NavLink[] = [
   { href: "/journal", label: "Journal", active: true },
@@ -69,14 +70,16 @@ export default function HomePage() {
         Zum Inhalt springen
       </a>
 
-      <Nav links={navLinks} />
-
-      <Marquee items={marqueeItems} />
+      <SiteHeader>
+        <Nav links={navLinks} />
+        <Marquee items={marqueeItems} />
+      </SiteHeader>
 
       <main id="hauptinhalt">
-        {/* Hero */}
+        {/* Hero — shares max-w-content (1120px) with every other section so
+            nav / marquee / hero / grid / footer all align on the same column. */}
         <section
-          className="mx-auto grid max-w-hero items-start gap-10 px-6 pt-16 pb-24 lg:grid-cols-2"
+          className="mx-auto grid max-w-content items-start gap-10 px-6 pt-16 pb-24 lg:grid-cols-2"
           aria-labelledby="hero-title"
         >
           <div>

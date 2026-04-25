@@ -8,8 +8,18 @@
    Share — the brand/logo font (used for the wordmark + UI small caps).
    DM Serif Display / Instrument Serif — editorial display.
    Geist — neutral body sans.
-   Geist Mono — code / specs. */
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Serif:ital@0;1&family=Share:ital,wght@0,400;0,700;1,400;1,700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+   Geist Mono — code / specs.
+
+   NOTE (design-kit v1.0.1, project-level adjustment):
+   The consuming project is responsible for loading the five families above.
+   Recommended loaders:
+     · Next.js                → next/font/google (self-hosted, preconnect, swap)
+     · Astro / Nuxt / Vite    → @fontsource packages or manual @font-face
+     · Plain HTML             → a single Google Fonts <link> in <head> or the
+       @import line kept in your own global stylesheet (not here)
+   We intentionally do NOT import Google Fonts from this file so token
+   consumption stays a pure CSS-variable concern and never triggers a
+   duplicate font request when the host app already loads them. */
 
 :root {
   /* ========== PRIMITIVE COLOR TOKENS ==========

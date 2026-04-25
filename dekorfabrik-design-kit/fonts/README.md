@@ -2,7 +2,7 @@
 
 ## Current setup
 
-The kit loads five font families from Google Fonts, imported at the top of `tokens/tokens.css`:
+The kit expects five font families to be loaded by the **consuming project**. Their CSS-variable hooks are declared in `tokens/tokens.css`:
 
 | Variable | Family | Role |
 |---|---|---|
@@ -12,8 +12,34 @@ The kit loads five font families from Google Fonts, imported at the top of `toke
 | `--font-sans` | **Geist** | Body text, UI, buttons, metadata |
 | `--font-mono` | **Geist Mono** | Code, specs, file names |
 
-The `@import` line at the top of `tokens.css` looks like:
+### Why the kit no longer ships a Google Fonts `@import`
 
+From **v1.0.1** the kit does **not** embed a `@import url(fonts.googleapis.com/...)` in `tokens.css`. Modern host frameworks load fonts better than a CSS `@import` can (self-hosted delivery, `preconnect`, `font-display: swap`, FOIT avoidance), and double-loading them produces a duplicate request for every page view. The kit is now framework-agnostic about font delivery — it declares the CSS variables and expects the host to provide the families.
+
+### How to load the fonts, per stack
+
+**Next.js (App Router) — preferred:**
+```ts
+// src/app/layout.tsx
+import { DM_Serif_Display, Geist, Geist_Mono, Instrument_Serif, Share } from "next/font/google";
+
+const share = Share({ subsets: ["latin"], weight: ["400", "700"], style: ["normal", "italic"], display: "swap", variable: "--font-share" });
+// …repeat for the other four; apply the .variable strings to <html>
+```
+Then in your global stylesheet, override the kit's font tokens to lead with the next/font variables:
+```css
+:root {
+  --font-brand: var(--font-share), "Geist", ui-sans-serif, sans-serif;
+  --font-display: var(--font-dm-serif-display), "Instrument Serif", Georgia, serif;
+  /* …and so on for --font-serif, --font-sans, --font-mono */
+}
+```
+
+**Astro / Nuxt / Vite / plain HTML:**
+Load a Google Fonts `<link>` in `<head>` yourself, OR install the `@fontsource/{dm-serif-display,instrument-serif,share,geist,geist-mono}` packages and import them at your app's entry point. Either way, leave `tokens.css` alone.
+
+**Vanilla CSS (no framework):**
+Put this line at the very top of **your own** stylesheet (not `tokens.css`):
 ```css
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Serif:ital@0;1&family=Share:ital,wght@0,400;0,700;1,400;1,700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
 ```

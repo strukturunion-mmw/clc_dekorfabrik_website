@@ -59,11 +59,36 @@ Runtime secrets belong in **Google Secret Manager** and are injected into the
 Cloud Run service, not committed to the repo. `.env.example` documents the
 expected variables. Use `.env.local` (gitignored) for local overrides.
 
-## Known limitations
+## Design-kit adjustments
 
-- **Duplicate Google Fonts request from the design kit.** The kit's
-  `dekorfabrik-design-kit/tokens/tokens.css` triggers a Google Fonts
-  `@import url(…)` that duplicates `next/font/google` loaded in
-  `src/app/layout.tsx`. Fix in design-kit v1.1 by removing the `@import`
-  from `tokens.css`. Until then, accept the duplicate request — the kit is
-  vendored immutable, so we don't edit it in this repo.
+The kit is still vendored under `dekorfabrik-design-kit/`, but it is **no
+longer strictly immutable** — we make targeted, documented edits when a
+fix can only live in the kit itself. All adjustments are recorded in
+`dekorfabrik-design-kit/CHANGELOG.md` (bump the kit's patch version there)
+and in this section:
+
+- **v1.0.1 — font delivery moved to the host app.** Dropped the Google
+  Fonts `@import url(...)` from `tokens/tokens.css`. Our `src/app/layout.tsx`
+  loads Share, DM Serif Display, Instrument Serif, Geist, and Geist Mono via
+  `next/font/google` (self-hosted, preconnected, `display: swap`) and
+  `src/app/globals.css` overrides the kit's `--font-*` tokens to lead with
+  the `next/font` CSS variables. The CSS variables stay the single
+  consumption point.
+- **Hero width aligned to the 1120-px content column.** `DESIGN.md` allows
+  the hero to extend to 1200 px. We align it to `max-w-content` (1120 px)
+  instead so the nav pill, marquee, hero, card grid, and footer all share
+  the same gutters at every breakpoint — the 80-px offset between hero and
+  the rest was visually off. If DESIGN.md is revised we'll reconsider.
+- **Nav + marquee share a single sticky header.** `SiteHeader` (in
+  `src/components/sections/`) wraps `<Nav>` and `<Marquee>` as one sticky
+  block with a paper-100 fill, so the marquee cannot bleed through the nav
+  pill during scroll. The two elements still render as separate components
+  and can be used independently.
+- **Nav lockup is the df mark + "dekorfabrik.de" Share text**, not the
+  full wordmark SVG — the wordmark contains its own df square and rendering
+  both produced a duplicated mark. The wordmark SVG remains in `public/`
+  and `dekorfabrik-design-kit/assets/logos/` for other surfaces
+  (share cards, email signatures, print).
+
+When the upstream kit ships a new version, reconcile these adjustments
+into the incoming drop before committing the upgrade.
