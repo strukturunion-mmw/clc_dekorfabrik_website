@@ -22,6 +22,9 @@ A story is done only when all relevant criteria are met:
    - Lint/build checks pass.
 
 ## Ongoing acceptance gates (post-MVP)
-- New features map to one planned story.
-- Story-specific acceptance criteria are added to planning files.
-- Docs/specs/planning are updated with behavior changes.
+- New features map to exactly one primary Notion Ticket ID.
+- The Notion ticket includes an acceptance criteria reference before work moves to `in_progress`.
+- Branch, PR link, blockers, decisions, and verification outcome are recorded on the Notion ticket.
+- Story-specific acceptance criteria are added to the Notion ticket before implementation starts.
+- Docs/specs are updated with behavior changes.
+- Legacy `/planning` markdown files remain archive-only unless an explicit migration or reconciliation task asks otherwise.

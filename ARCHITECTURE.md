@@ -31,6 +31,8 @@ This repository contains the production website for Dekorfabrik. The architectur
 - **Scalability**: incremental extension of pages/components without redesigning the base system.
 
 ## Delivery model
-- Work is tracked by **epics** and **user stories** in `/planning`.
-- Requirements and acceptance criteria are maintained in `/specs`.
-- Implementation proceeds in small PR-sized tasks mapped to one story at a time.
+- Work is tracked by **epics** and **tickets** in Notion.
+- Notion is the source of truth for ticket status, branch/PR links, blockers, delivery notes, and implementation decisions.
+- Requirements and baseline acceptance gates are maintained in `/specs`.
+- The legacy `/planning` markdown files are archival migration sources only.
+- Implementation proceeds in small PR-sized tasks mapped to exactly one primary Notion Ticket ID at a time.
