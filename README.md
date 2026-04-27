@@ -18,6 +18,16 @@ npm run dev
 
 The dev server runs on <http://localhost:3000>.
 
+## Project tracking
+
+Notion is the live source of truth for epics, tickets, delivery status, branch/PR links, blockers, and verification notes.
+
+- Project page: <https://www.notion.so/272d3057f900478eb75b971d9242c153>
+- Epics database: <https://www.notion.so/801b85a5d27b46409244de5b5b53d32e>
+- Tickets database: <https://www.notion.so/539a6ca790c54270a5adcabee4c63035>
+
+The `planning/` markdown files are retained as migration history only.
+
 Other scripts:
 
 ```bash
