@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
-import { Button } from "./Button";
+import { LinkButton } from "./Button";
 
 export type NavLink = {
   href: string;
@@ -14,18 +14,18 @@ type NavProps = {
   links: NavLink[];
   /** Aria label for the primary nav landmark. */
   ariaLabel?: string;
-  /** Optional custom action slot (defaults to Anmelden + Datei hochladen). */
+  /** Optional custom action slot (defaults to examples + contact/upload). */
   actions?: ReactNode;
 };
 
 const defaultActions = (
   <>
-    <Button variant="secondary" size="sm">
-      Anmelden
-    </Button>
-    <Button variant="brand" size="sm">
-      Datei hochladen <span aria-hidden="true">→</span>
-    </Button>
+    <LinkButton variant="secondary" size="sm" href="/referenzen">
+      Beispiele
+    </LinkButton>
+    <LinkButton variant="brand" size="sm" href="/kontakt">
+      Datei senden <span aria-hidden="true">→</span>
+    </LinkButton>
   </>
 );
 
