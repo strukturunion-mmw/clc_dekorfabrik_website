@@ -1,19 +1,14 @@
 /*
   Import the kit tokens first so the Google Fonts `@import url(…)` at the top
   of tokens.css stays a valid CSS @import (must precede non-@import rules).
-  next/font in layout.tsx is the real font loader — we accept a small duplicate
-  request from the kit's @import rather than edit tokens.css.
 */
 @import "../../dekorfabrik-design-kit/tokens/tokens.css";
 @import "tailwindcss";
 
 /*
-  Override the font-stack tokens from the kit to lead with the CSS variables
-  produced by `next/font/google` (see src/app/layout.tsx). We do NOT edit
-  tokens.css itself — the kit is vendored and must stay immutable.
-  Note: tokens.css contains a Google Fonts `@import url(...)` that still
-  fires. This is an accepted small duplicate request; next/font remains the
-  primary loader (preconnect, self-hosting, display: swap).
+  Keep the kit as the source of truth for font stacks. The leading CSS custom
+  properties are optional hooks for future local/self-hosted fonts; when they
+  are unset, the declared fallbacks from the design kit take over.
 */
 :root {
   --font-display: var(--font-dm-serif-display), "Instrument Serif", "Times New Roman", Georgia, serif;

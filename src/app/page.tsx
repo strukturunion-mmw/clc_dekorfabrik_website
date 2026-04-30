@@ -1,28 +1,10 @@
 import { Pill } from "@/components/ui/Pill";
-import { Nav, type NavLink } from "@/components/ui/Nav";
 import { LinkButton } from "@/components/ui/Button";
 import { CardCream } from "@/components/ui/CardCream";
 import { CardFeatureNavy } from "@/components/ui/CardFeatureNavy";
 import { CtaPanel, type CtaStep } from "@/components/sections/CtaPanel";
-import { Marquee } from "@/components/sections/Marquee";
-import { Footer } from "@/components/sections/Footer";
-import { SiteHeader } from "@/components/sections/SiteHeader";
-
-const navLinks: NavLink[] = [
-  { href: "/journal", label: "Journal", active: true },
-  { href: "/dienste", label: "Dienste" },
-  { href: "/freebies", label: "Freebies" },
-  { href: "/faq", label: "FAQ" },
-];
-
-const marqueeItems = [
-  "Ausgabe 042 · 15. Apr 2026",
-  "Handgezogene Vektorisierung",
-  "Stickdatei-Digitalisierung",
-  "Druckfertige Dateien in 24h",
-  "Studio Leipzig · DACH-weit",
-  "April-Kurs offen",
-];
+import { PageShell } from "@/components/sections/PageShell";
+import { inquiryMailto } from "@/components/siteContent";
 
 const ctaSteps: CtaStep[] = [
   { n: "01", title: "Grundlagen abklären", status: "done" },
@@ -31,55 +13,9 @@ const ctaSteps: CtaStep[] = [
   { n: "04", title: "Freigabe & Versand", status: "upcoming" },
 ];
 
-const footerGroups = [
-  {
-    heading: "Dienste",
-    links: [
-      { href: "/dienste/vektorisierung", label: "Vektorisierung" },
-      { href: "/dienste/stickdatei", label: "Stickdatei" },
-      { href: "/dienste/upscaling", label: "AI-Upscaling" },
-      { href: "/dienste/druckdaten", label: "Druckdaten-Check" },
-    ],
-  },
-  {
-    heading: "Studio",
-    links: [
-      { href: "/journal", label: "Journal" },
-      { href: "/freebies", label: "Freebies" },
-      { href: "/referenzen", label: "Referenzen" },
-      { href: "/kontakt", label: "Kontakt" },
-    ],
-  },
-  {
-    heading: "Rechtliches",
-    links: [
-      { href: "/impressum", label: "Impressum" },
-      { href: "/datenschutz", label: "Datenschutz" },
-      { href: "/agb", label: "AGB" },
-    ],
-  },
-];
-
 export default function HomePage() {
   return (
-    <>
-      <a
-        href="#hauptinhalt"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-pill focus:bg-navy-900 focus:px-4 focus:py-2 focus:text-paper-100"
-      >
-        Zum Inhalt springen
-      </a>
-
-      <SiteHeader>
-        <div className="mx-auto w-full max-w-content px-6">
-          <Nav links={navLinks} />
-        </div>
-        <div className="hidden md:block">
-          <Marquee items={marqueeItems} />
-        </div>
-      </SiteHeader>
-
-      <main id="hauptinhalt">
+    <PageShell>
         {/* Hero — shares max-w-content (1120px) with every other section so
             nav / marquee / hero / grid / footer all align on the same column. */}
         <section
@@ -106,11 +42,11 @@ export default function HomePage() {
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <LinkButton variant="brand" href="/upload">
-                Datei hochladen <span aria-hidden="true">→</span>
+              <LinkButton variant="brand" href={inquiryMailto}>
+                Anfrage senden <span aria-hidden="true">→</span>
               </LinkButton>
-              <LinkButton variant="secondary" href="/referenzen">
-                Beispiele ansehen
+              <LinkButton variant="secondary" href="/dienste">
+                Leistungen ansehen
               </LinkButton>
             </div>
 
@@ -406,15 +342,9 @@ export default function HomePage() {
               </>
             }
             steps={ctaSteps}
-            action={{ label: "Auftrag freigeben", href: "/auftrag" }}
+            action={{ label: "Anfrage per E-Mail", href: inquiryMailto }}
           />
         </section>
-      </main>
-
-      <Footer
-        tagline="Designstudio aus Leipzig. Vektorisierung, Stickdateien und druckfertige Dateien — handgezogen, nicht auto-traced."
-        groups={footerGroups}
-      />
-    </>
+    </PageShell>
   );
 }
