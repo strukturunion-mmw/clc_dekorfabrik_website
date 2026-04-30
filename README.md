@@ -1,12 +1,12 @@
 # clc_dekorfabrik_website
 
-Website for CLC Dekorfabrik, built with Next.js 15 and deployed to Google Cloud Run.
+Website for CLC Dekorfabrik, built with Next.js 16 and deployed to Google Cloud Run.
 
 ## Stack
 
-- Next.js 15 (App Router) + React 19 + TypeScript (strict)
-- Tailwind CSS v3
-- Node 20 (see `.nvmrc`)
+- Next.js 16 (App Router) + React 19 + TypeScript (strict)
+- Tailwind CSS v4
+- Node 24 (see `.nvmrc`)
 
 ## Local development
 
@@ -34,6 +34,33 @@ Other scripts:
 npm run build    # production build (emits .next/standalone/)
 npm run start    # run the production build locally
 npm run lint     # ESLint
+npm run automation:preflight
+npm run automation:verify
+```
+
+## Automation environment
+
+Recurring repo automations should run in a pinned environment instead of an ad
+hoc shell session. The baseline contract for this repo is:
+
+- Node `24.x`, matching `.nvmrc`, CI, and the Docker build image
+- `git`, `gh`, `curl`, `node`, and `npm` installed
+- `gh auth status` succeeds
+- `CODEX_HOME` is set and writable
+- the repo starts from a clean checkout
+- `npm ci` has already populated `node_modules`
+- network access to GitHub and Notion is available
+
+Run this before a ticket-implementation automation claims work:
+
+```bash
+npm run automation:preflight
+```
+
+For local or CI-style verification after changes:
+
+```bash
+npm run automation:verify
 ```
 
 ## Deployment

@@ -1,22 +1,16 @@
 /*
-  Import the kit tokens first so the Google Fonts `@import url(…)` at the top
-  of tokens.css stays a valid CSS @import (must precede non-@import rules).
+  The design kit expects the consuming app to load the five stand-in families
+  itself. We load them here at runtime so deploys match the design system
+  without making the build depend on Google Fonts availability.
+*/
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Serif:ital@0;1&family=Share:ital,wght@0,400;0,700;1,400;1,700&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap");
+
+/*
+  Import the kit tokens before Tailwind so the design system remains the source
+  of truth for colors, radii, shadows, typography, and spacing.
 */
 @import "../../dekorfabrik-design-kit/tokens/tokens.css";
 @import "tailwindcss";
-
-/*
-  Keep the kit as the source of truth for font stacks. The leading CSS custom
-  properties are optional hooks for future local/self-hosted fonts; when they
-  are unset, the declared fallbacks from the design kit take over.
-*/
-:root {
-  --font-display: var(--font-dm-serif-display), "Instrument Serif", "Times New Roman", Georgia, serif;
-  --font-serif:   var(--font-instrument-serif), "DM Serif Display", Georgia, serif;
-  --font-brand:   var(--font-share), "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-sans:    var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono:    var(--font-geist-mono), ui-monospace, "SFMono-Regular", "Roboto Mono", monospace;
-}
 
 /*
   Map every Dekorfabrik token onto Tailwind v4 theme keys using @theme inline
