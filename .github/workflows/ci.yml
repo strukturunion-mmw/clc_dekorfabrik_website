@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Automation preflight (CI-safe)
+        run: npm run automation:preflight:ci
+
       - name: Lint
         run: npm run lint
 

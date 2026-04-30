@@ -12,6 +12,7 @@ Website for CLC Dekorfabrik, built with Next.js 16 and deployed to Google Cloud 
 
 ```bash
 nvm use          # or: fnm use
+direnv allow     # optional, auto-loads CODEX_HOME + PATH + Node version
 npm install
 npm run dev
 ```
@@ -35,7 +36,9 @@ npm run build    # production build (emits .next/standalone/)
 npm run start    # run the production build locally
 npm run lint     # ESLint
 npm run automation:preflight
+npm run automation:preflight:ci
 npm run automation:verify
+npm run automation:run
 ```
 
 ## Automation environment
@@ -44,6 +47,7 @@ Recurring repo automations should run in a pinned environment instead of an ad
 hoc shell session. The baseline contract for this repo is:
 
 - Node `24.x`, matching `.nvmrc`, CI, and the Docker build image
+- npm `11.x`
 - `git`, `gh`, `curl`, `node`, and `npm` installed
 - `gh auth status` succeeds
 - `CODEX_HOME` is set and writable
@@ -57,10 +61,29 @@ Run this before a ticket-implementation automation claims work:
 npm run automation:preflight
 ```
 
+If you use `direnv`, the checked-in [`.envrc`](.envrc) will automatically:
+
+- set `CODEX_HOME` to `~/.codex` unless already defined
+- set `NEXT_TELEMETRY_DISABLED=1`
+- add `node_modules/.bin` to `PATH`
+- try to activate the `.nvmrc` Node version when `use_nvm` is available
+
+Enable it once per clone:
+
+```bash
+direnv allow
+```
+
 For local or CI-style verification after changes:
 
 ```bash
 npm run automation:verify
+```
+
+For one command that enforces the local automation contract and then verifies:
+
+```bash
+npm run automation:run
 ```
 
 ## Deployment
