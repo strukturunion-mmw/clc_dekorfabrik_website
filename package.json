@@ -2,7 +2,19 @@
   "name": "clc-dekorfabrik-website",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "24.x",
+    "npm": "11.x"
+  },
+  "volta": {
+    "node": "24.15.0",
+    "npm": "11.13.0"
+  },
   "scripts": {
+    "automation:preflight": "./scripts/automation-preflight.sh",
+    "automation:preflight:ci": "./scripts/automation-preflight-ci.sh",
+    "automation:run": "npm run automation:preflight && npm run automation:verify",
+    "automation:verify": "npm run lint && npm run build",
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
