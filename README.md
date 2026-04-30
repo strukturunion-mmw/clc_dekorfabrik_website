@@ -10,8 +10,22 @@ Website for CLC Dekorfabrik, built with Next.js 16 and deployed to Google Cloud 
 
 ## Local development
 
+Preferred bootstrap on macOS:
+
 ```bash
-nvm use          # or: fnm use
+brew install volta gh direnv
+volta install node@24 npm@11
+echo 'eval "$(direnv hook zsh)"' >> ~/.zshrc
+exec zsh
+```
+
+Alternative version managers such as `nvm`, `fnm`, or `asdf` also work, as
+long as the active Node major matches `.nvmrc`.
+
+Then initialize the repo:
+
+```bash
+volta pin node@24 npm@11   # optional, if not already picked up from package.json
 direnv allow     # optional, auto-loads CODEX_HOME + PATH + Node version
 npm install
 npm run dev
@@ -84,6 +98,13 @@ For one command that enforces the local automation contract and then verifies:
 
 ```bash
 npm run automation:run
+```
+
+If `direnv` is not installed, export `CODEX_HOME` manually before running the
+automation preflight:
+
+```bash
+export CODEX_HOME="$HOME/.codex"
 ```
 
 ## Deployment

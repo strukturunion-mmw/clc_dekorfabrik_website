@@ -7,8 +7,8 @@
     "npm": "11.x"
   },
   "volta": {
-    "node": "24.0.0",
-    "npm": "11.9.0"
+    "node": "24.15.0",
+    "npm": "11.13.0"
   },
   "scripts": {
     "automation:preflight": "./scripts/automation-preflight.sh",
