@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { LinkButton } from "./Button";
+import { inquiryMailto } from "../siteContent";
 
 export type NavLink = {
   href: string;
@@ -20,11 +22,11 @@ type NavProps = {
 
 const defaultActions = (
   <>
-    <LinkButton variant="secondary" size="sm" href="/referenzen">
-      Beispiele
+    <LinkButton variant="secondary" size="sm" href="/faq">
+      FAQ ansehen
     </LinkButton>
-    <LinkButton variant="brand" size="sm" href="/kontakt">
-      Datei senden <span aria-hidden="true">→</span>
+    <LinkButton variant="brand" size="sm" href={inquiryMailto}>
+      Anfrage senden <span aria-hidden="true">→</span>
     </LinkButton>
   </>
 );
@@ -35,6 +37,12 @@ export function Nav({
   actions = defaultActions,
 }: NavProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isLinkActive = (link: NavLink) =>
+    link.active ??
+    (link.href === "/"
+      ? pathname === "/"
+      : pathname === link.href || pathname.startsWith(`${link.href}/`));
 
   return (
     <nav aria-label={ariaLabel} className="mx-auto w-full max-w-content">
@@ -69,10 +77,10 @@ export function Nav({
             <li key={link.href}>
               <Link
                 href={link.href}
-                aria-current={link.active ? "page" : undefined}
+                aria-current={isLinkActive(link) ? "page" : undefined}
                 className={[
                   "inline-flex items-center rounded-pill px-4 py-2 font-sans text-sm font-medium no-underline transition-colors duration-base ease-standard",
-                  link.active
+                  isLinkActive(link)
                     ? "bg-navy-900 text-paper-100"
                     : "text-navy-700 hover:bg-navy-900/5",
                 ].join(" ")}
@@ -128,11 +136,11 @@ export function Nav({
             <li key={`mobile-${link.href}`}>
               <Link
                 href={link.href}
-                aria-current={link.active ? "page" : undefined}
+                aria-current={isLinkActive(link) ? "page" : undefined}
                 onClick={() => setMenuOpen(false)}
                 className={[
                   "inline-flex w-full items-center rounded-md px-3 py-2.5 font-sans text-sm font-medium no-underline transition-colors duration-base ease-standard",
-                  link.active
+                  isLinkActive(link)
                     ? "bg-navy-900 text-paper-100"
                     : "text-navy-700 hover:bg-navy-900/5",
                 ].join(" ")}

@@ -1,50 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import {
-  DM_Serif_Display,
-  Geist,
-  Geist_Mono,
-  Instrument_Serif,
-  Share,
-} from "next/font/google";
 import "./globals.css";
-
-const share = Share({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-share",
-});
-
-const dmSerifDisplay = DM_Serif_Display({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-dm-serif-display",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-instrument-serif",
-});
-
-const geist = Geist({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-  variable: "--font-geist",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-  variable: "--font-geist-mono",
-});
 
 const siteUrl = "https://dekorfabrik.de";
 const siteTitle = "dekorfabrik.de";
@@ -100,16 +55,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const fontVars = [
-    share.variable,
-    dmSerifDisplay.variable,
-    instrumentSerif.variable,
-    geist.variable,
-    geistMono.variable,
-  ].join(" ");
-
   return (
-    <html lang="de" className={fontVars}>
+    <html lang="de">
       <body className="min-h-screen bg-paper-100 font-sans text-navy-900 antialiased">
         {children}
       </body>
