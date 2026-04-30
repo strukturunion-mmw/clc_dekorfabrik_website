@@ -49,7 +49,7 @@ const geistMono = Geist_Mono({
 const siteUrl = "https://dekorfabrik.de";
 const siteTitle = "dekorfabrik.de";
 const siteDescription =
-  "Handgezogene Vektorisierung, Stickdatei-Digitalisierung und druckfertige Dateikonvertierung aus dem Studio Leipzig — für Designer und Betriebe im DACH-Raum.";
+  "Handgezogene Vektorisierung, Stickdatei-Digitalisierung und druckfertige Dateikonvertierung. From Frankfurt with ♥︎ — für Designer und Betriebe.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     "Logo Vektorisieren",
     "Druckfertige Datei",
     "Dekorfabrik",
-    "Leipzig",
+    "Frankfurt",
   ],
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
