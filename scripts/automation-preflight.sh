@@ -25,7 +25,7 @@ need_cmd curl
 
 expected_node="$(tr -d '[:space:]' < .nvmrc)"
 actual_node="$(node -p 'process.versions.node')"
-actual_major="$(node -p 'process.versions.node.split(\".\")[0]')"
+actual_major="${actual_node%%.*}"
 
 say "repo: $ROOT_DIR"
 say "node: $actual_node"
