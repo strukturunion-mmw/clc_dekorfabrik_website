@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import { ArrowUpRight } from "../icons/ArrowUpRight";
 
@@ -19,20 +20,24 @@ type CardFeatureNavyProps = {
   metricLabel: ReactNode;
   /** Two paper sub-cards — exactly two for the signature stack. */
   papers: [PaperCard, PaperCard];
+  image?: {
+    src: string;
+    alt: string;
+  };
   href: string;
   ariaLabel?: string;
 };
 
 const paperStyleBase: React.CSSProperties = {
   position: "absolute",
-  maxWidth: 300,
+  width: "min(300px, calc(100% - 48px))",
   boxShadow: "var(--shadow-paper)",
 };
 
 const paperStyles: Record<PaperCard["tone"], React.CSSProperties> = {
   cream: {
     ...paperStyleBase,
-    top: 100,
+    top: 316,
     left: 24,
     transform: "rotate(-4deg)",
     background: "var(--paper-50)",
@@ -40,8 +45,8 @@ const paperStyles: Record<PaperCard["tone"], React.CSSProperties> = {
   },
   sky: {
     ...paperStyleBase,
-    top: 210,
-    left: 140,
+    top: 386,
+    left: "clamp(42px, 24%, 140px)",
     transform: "rotate(3deg)",
     background: "var(--sky-500)",
     color: "var(--navy-900)",
@@ -53,6 +58,7 @@ export function CardFeatureNavy({
   metric,
   metricLabel,
   papers,
+  image,
   href,
   ariaLabel,
 }: CardFeatureNavyProps) {
@@ -66,7 +72,7 @@ export function CardFeatureNavy({
         "hover:-translate-y-0.5 hover:shadow-lg",
         "focus:outline-none focus-visible:outline-2 focus-visible:outline-paper-100 focus-visible:outline-offset-2",
       ].join(" ")}
-      style={{ minHeight: 440 }}
+      style={{ minHeight: 560 }}
     >
       <div className="font-brand text-xs uppercase tracking-brand text-navy-200">
         {eyebrow}
@@ -88,6 +94,38 @@ export function CardFeatureNavy({
       >
         <ArrowUpRight />
       </span>
+
+      {image ? (
+        <div
+          className="absolute overflow-hidden rounded-lg"
+          style={{
+            top: 66,
+            left: 24,
+            right: 24,
+            height: 224,
+            borderWidth: 1,
+            borderStyle: "solid",
+            borderColor: "rgba(247, 243, 234, 0.18)",
+          }}
+        >
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            sizes="(min-width: 1024px) 512px, calc(100vw - 48px)"
+            className="object-cover transition-transform duration-base ease-out-soft group-hover:scale-[1.015]"
+            priority
+          />
+          <span
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(13, 30, 67, 0) 45%, rgba(13, 30, 67, 0.28) 100%)",
+            }}
+          />
+        </div>
+      ) : null}
 
       {papers.map((paper, i) => (
         <div

@@ -20,7 +20,7 @@ const marqueeItems = [
   "Handgezogene Vektorisierung",
   "Stickdateien für Tajima, Wilcom und Barudan",
   "Druckfertige PDF, SVG, EPS und AI",
-  "Studio Leipzig · DACH-weit",
+  "From Frankfurt with ♥︎",
   "Freigabe vor Lieferung",
   "Datei-Check für Unternehmen und Agenturen",
 ];
@@ -89,7 +89,7 @@ export default function HomePage() {
         >
           <div>
             <Pill tone="sky" dot>
-              Studio Leipzig · DACH-weit
+              From Frankfurt with ♥︎
             </Pill>
 
             <h1
@@ -147,14 +147,20 @@ export default function HomePage() {
           <CardFeatureNavy
             eyebrow="Datei-Check · Manuell statt Auto-Trace"
             href="#leistungen"
-            metric="DACH"
+            metric="FFM"
             metricLabel={
               <>
-                Leipzig
+                From
                 <br />
-                plus Remote
+                Frankfurt
+                <br />
+                with ♥︎
               </>
             }
+            image={{
+              src: "/home-production-studio.png",
+              alt: "Arbeitsplatz mit Vektorkurven, Druckmustern und Stickgarnen fuer die Dateivorbereitung",
+            }}
             papers={[
               {
                 tone: "cream",
@@ -335,8 +341,8 @@ export default function HomePage() {
                   <em className="italic">Produktionspartner.</em>
                 </>
               }
-              body="Ob einmaliger Logo-Rettungsauftrag oder wiederkehrende Reinzeichnung: Dekorfabrik arbeitet DACH-weit für Teams, die verlässliche Dateien brauchen."
-              meta="B2B · DACH · Leipzig"
+              body="Ob einmaliger Logo-Rettungsauftrag oder wiederkehrende Reinzeichnung: Dekorfabrik arbeitet — From Frankfurt with ♥︎ — für Teams, die verlässliche Dateien brauchen."
+              meta="B2B · From Frankfurt with ♥︎"
               href="/referenzen"
             />
 
@@ -420,7 +426,7 @@ export default function HomePage() {
       </main>
 
       <Footer
-        tagline="Designstudio aus Leipzig. Vektorisierung, Stickdateien und druckfertige Dateien — handgezogen, nicht auto-traced."
+        tagline="From Frankfurt with ♥︎. Vektorisierung, Stickdateien und druckfertige Dateien — handgezogen, nicht auto-traced."
         groups={footerGroups}
       />
     </>
