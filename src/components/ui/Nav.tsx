@@ -16,7 +16,7 @@ type NavProps = {
   links: NavLink[];
   /** Aria label for the primary nav landmark. */
   ariaLabel?: string;
-  /** Optional custom action slot (defaults to Anmelden + Datei hochladen). */
+  /** Optional custom action slot (defaults to examples + contact/upload). */
   actions?: ReactNode;
 };
 
