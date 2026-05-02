@@ -23,6 +23,50 @@ need_cmd npm
 need_cmd gh
 need_cmd curl
 
+ensure_writable_dir() {
+  local dir="$1"
+
+  [[ -n "$dir" ]] || return 1
+
+  if [[ -d "$dir" ]]; then
+    [[ -w "$dir" ]]
+    return
+  fi
+
+  mkdir -p "$dir" >/dev/null 2>&1 && [[ -w "$dir" ]]
+}
+
+resolve_codex_home() {
+  local requested="${CODEX_HOME:-}"
+  local resolved=""
+  local -a candidates=()
+
+  if [[ -n "$requested" ]]; then
+    candidates+=("$requested")
+  fi
+
+  candidates+=(
+    "$HOME/.codex"
+    "$HOME/.codex/automations"
+    "$ROOT_DIR/.codex"
+  )
+
+  for candidate in "${candidates[@]}"; do
+    if ensure_writable_dir "$candidate"; then
+      resolved="$candidate"
+      break
+    fi
+  done
+
+  [[ -n "$resolved" ]] || fail "could not find or create a writable CODEX_HOME; tried: ${candidates[*]}"
+
+  if [[ -n "$requested" && "$resolved" != "$requested" ]]; then
+    say "CODEX_HOME fallback: $requested is unavailable, using $resolved"
+  fi
+
+  export CODEX_HOME="$resolved"
+}
+
 expected_node="$(tr -d '[:space:]' < .nvmrc)"
 actual_node="$(node -p 'process.versions.node')"
 actual_major="${actual_node%%.*}"
@@ -33,9 +77,7 @@ say "npm: $(npm -v)"
 
 [[ "$actual_major" == "$expected_node" ]] || fail "Node major $actual_major does not match .nvmrc ($expected_node)"
 
-[[ -n "${CODEX_HOME:-}" ]] || fail "CODEX_HOME is not set"
-[[ -d "$CODEX_HOME" ]] || fail "CODEX_HOME does not exist: $CODEX_HOME"
-[[ -w "$CODEX_HOME" ]] || fail "CODEX_HOME is not writable: $CODEX_HOME"
+resolve_codex_home
 say "CODEX_HOME: $CODEX_HOME"
 
 git remote get-url origin >/dev/null 2>&1 || fail "git remote 'origin' is not configured"

@@ -64,10 +64,14 @@ hoc shell session. The baseline contract for this repo is:
 - npm `11.x`
 - `git`, `gh`, `curl`, `node`, and `npm` installed
 - `gh auth status` succeeds
-- `CODEX_HOME` is set and writable
+- `CODEX_HOME` resolves to a writable directory
 - the repo starts from a clean checkout
 - `npm ci` has already populated `node_modules`
 - network access to GitHub and Notion is available
+
+GitHub reachability stays a hard requirement because ticket automation is
+expected to branch from the current `origin/main`, not from a stale local
+checkout.
 
 Run this before a ticket-implementation automation claims work:
 
@@ -77,7 +81,8 @@ npm run automation:preflight
 
 If you use `direnv`, the checked-in [`.envrc`](.envrc) will automatically:
 
-- set `CODEX_HOME` to `~/.codex` unless already defined
+- keep an existing `CODEX_HOME`, otherwise resolve one in this order:
+  `~/.codex`, `~/.codex/automations`, then repo-local `.codex/`
 - set `NEXT_TELEMETRY_DISABLED=1`
 - add `node_modules/.bin` to `PATH`
 - try to activate the `.nvmrc` Node version when `use_nvm` is available
@@ -101,11 +106,16 @@ npm run automation:run
 ```
 
 If `direnv` is not installed, export `CODEX_HOME` manually before running the
-automation preflight:
+automation preflight. `~/.codex` remains the preferred default for normal local
+runs:
 
 ```bash
 export CODEX_HOME="$HOME/.codex"
 ```
+
+If that location is not writable in an automation sandbox, the preflight will
+automatically fall back to `~/.codex/automations` and finally to repo-local
+`.codex/` while keeping the rest of the local Mac contract unchanged.
 
 ## Deployment
 
