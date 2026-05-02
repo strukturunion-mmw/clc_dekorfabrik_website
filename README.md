@@ -73,7 +73,23 @@ GitHub reachability stays a hard requirement because ticket automation is
 expected to branch from the current `origin/main`, not from a stale local
 checkout.
 
-Run this before a ticket-implementation automation claims work:
+Bootstrap a fresh automation worktree before a ticket-implementation
+automation claims work:
+
+```bash
+npm run automation:bootstrap
+```
+
+This script:
+
+- runs `git fetch origin --prune`
+- fails early with a clearer GitHub/DNS message when `origin` is unreachable
+- creates a fresh detached worktree from current `origin/main`
+- runs `npm ci` there when `node_modules` is missing
+- runs `direnv exec . npm run automation:preflight` in that clean worktree
+
+Run this inside an already-prepared worktree when you only need the strict
+repo-contract check:
 
 ```bash
 npm run automation:preflight
@@ -116,6 +132,11 @@ export CODEX_HOME="$HOME/.codex"
 If that location is not writable in an automation sandbox, the preflight will
 automatically fall back to `~/.codex/automations` and finally to repo-local
 `.codex/` while keeping the rest of the local Mac contract unchanged.
+
+Automation workflow rule:
+
+- do not move a Notion ticket to `in_progress` until `npm run automation:bootstrap`
+  or the equivalent fetch + fresh-worktree + preflight sequence has passed
 
 ## Deployment
 
