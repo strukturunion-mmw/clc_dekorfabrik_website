@@ -39,12 +39,12 @@ const faqGroups = [
       {
         question: "Wie erhalte ich ein Angebot?",
         answer:
-          "Sie schicken Datei, Einsatzkontext und Deadline. Danach klären wir Aufwand, sinnvolle Leistung und gegebenenfalls Revisionen, bevor Sie eine Freigabe erteilen.",
+          "Sie schicken Datei, Einsatzkontext und Deadline. Danach klären wir Aufwand, sinnvolle Leistung und gegebenenfalls Revisionen. Preisorientierungen bleiben unverbindlich, bis Angebot und Freigabegrundlage individuell bestätigt sind.",
       },
       {
         question: "Sind Revisionen möglich?",
         answer:
-          "Ja, sinnvolle Korrekturschleifen sind im Ablauf eingeplant. Wir stimmen aber vorher ab, ob es um Feinschliff oder um eine inhaltlich neue Aufgabenstellung geht.",
+          "Ja, sinnvolle Korrekturschleifen sind im Ablauf eingeplant. Sie beziehen sich auf das abgestimmte Briefing; neue Motive, andere Zielmedien oder geänderte Produktionsvorgaben können ein neues oder erweitertes Briefing sein.",
       },
     ],
   },
@@ -60,7 +60,7 @@ const faqGroups = [
       {
         question: "Wie läuft die Zusammenarbeit nach der Anfrage ab?",
         answer:
-          "Nach Ihrer Nachricht prüfen wir Datei und Zielmedium, klären Aufwand und Preisorientierung und starten erst nach Freigabe mit der Ausarbeitung. Danach folgen bei Bedarf Revisionen und die finale Auslieferung.",
+          "Nach Ihrer Nachricht prüfen wir Datei und Zielmedium, klären Aufwand und Preisorientierung und starten erst nach bestätigter Freigabegrundlage mit der Ausarbeitung. Danach folgen bei Bedarf abgestimmte Revisionen und die finale Auslieferung.",
       },
       {
         question: "Wie frage ich am besten mit Datei und kurzer Beschreibung an?",

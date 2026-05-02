@@ -73,7 +73,7 @@ const processSteps = [
     n: "03",
     title: "Angebot und Produktionsfreigabe",
     body:
-      "Sie erhalten eine Preisorientierung bzw. ein konkretes Angebot. Nach Freigabe beginnt die manuelle Ausarbeitung.",
+      "Sie erhalten eine unverbindliche Preisorientierung bzw. ein konkretes Angebot. Verbindlich wird der Umfang erst mit bestätigter Freigabegrundlage.",
   },
   {
     n: "04",
@@ -257,6 +257,15 @@ export default function ServicesPage() {
               keinen Schein-Kalkulator. Der Preis richtet sich danach, wie
               komplex das Motiv ist, wie sauber die Ausgangsdatei vorliegt und
               welches Ergebnis Sie am Ende wirklich brauchen.
+            </p>
+            <p className="mt-4 font-sans text-base text-navy-700">
+              Preisangaben auf der Website bleiben Orientierung, bis Angebot
+              und Freigabegrundlage individuell bestätigt sind. Details zu
+              Leistungsumfang, Revisionen und Liefergrenzen stehen im{" "}
+              <a className="text-azure-700 underline" href="/agb">
+                AGB-Entwurf
+              </a>
+              .
             </p>
             <p className="mt-4 font-sans text-base text-navy-700">
               Für einfache Motive ist die Einordnung schneller. Bei komplexen
