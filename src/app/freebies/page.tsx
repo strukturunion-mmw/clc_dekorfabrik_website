@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/sections/PageShell";
 import { LinkButton } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Freebies",
   description:
     "Kompakte Orientierungshilfen, Checklisten und nächste Schritte für Dateien vor Druck, Stick und Vektorisierung.",
-};
+  path: "/freebies",
+});
 
 const freebieCards = [
   {

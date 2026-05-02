@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Pill } from "@/components/ui/Pill";
 import { LinkButton } from "@/components/ui/Button";
 import { CardCream } from "@/components/ui/CardCream";
@@ -5,6 +6,7 @@ import { CardFeatureNavy } from "@/components/ui/CardFeatureNavy";
 import { CtaPanel, type CtaStep } from "@/components/sections/CtaPanel";
 import { PageShell } from "@/components/sections/PageShell";
 import { inquiryPath } from "@/components/siteContent";
+import { createPageMetadata } from "@/lib/metadata";
 
 const marqueeItems = [
   "Handgezogene Vektorisierung",
@@ -21,6 +23,12 @@ const ctaSteps: CtaStep[] = [
   { n: "03", title: "Format & Farbraum wählen", status: "upcoming" },
   { n: "04", title: "Freigabe & Versand", status: "upcoming" },
 ];
+
+export const metadata: Metadata = createPageMetadata({
+  description:
+    "Dekorfabrik bereitet Logos, Vorlagen und Layouts manuell für Druck, Stick und Weiterverarbeitung auf – mit klarer Anfrage, sauberer Freigabe und DACH-weiter Abstimmung.",
+  path: "/",
+});
 
 export default function HomePage() {
   return (

@@ -1,22 +1,29 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import {
+  brandName,
+  defaultDescription,
+  getStructuredData,
+  siteName,
+  siteUrl,
+} from "@/lib/metadata";
 
-const siteUrl = "https://dekorfabrik.de";
-const siteTitle = "dekorfabrik.de";
-const siteDescription =
-  "Handgezogene Vektorisierung, Stickdatei-Digitalisierung und druckfertige Dateikonvertierung. From Frankfurt with ♥︎ — für Designer und Betriebe.";
+const structuredData = getStructuredData();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: siteTitle,
-    template: "%s · dekorfabrik.de",
+    default: siteName,
+    template: `%s · ${siteName}`,
   },
-  description: siteDescription,
-  applicationName: "dekorfabrik.de",
-  authors: [{ name: "Dekorfabrik GmbH" }],
-  creator: "Dekorfabrik GmbH",
-  publisher: "Dekorfabrik GmbH",
+  description: defaultDescription,
+  applicationName: siteName,
+  alternates: {
+    canonical: "/",
+  },
+  authors: [{ name: brandName }],
+  creator: brandName,
+  publisher: brandName,
   keywords: [
     "Vektorisierung",
     "Stickdatei",
@@ -34,14 +41,18 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_DE",
     url: siteUrl,
-    title: siteTitle,
-    description: siteDescription,
-    siteName: siteTitle,
+    title: siteName,
+    description: defaultDescription,
+    siteName,
   },
   twitter: {
     card: "summary_large_image",
-    title: siteTitle,
-    description: siteDescription,
+    title: siteName,
+    description: defaultDescription,
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -58,6 +69,10 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body className="min-h-screen bg-paper-100 font-sans text-navy-900 antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         {children}
       </body>
     </html>
