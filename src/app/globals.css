@@ -157,3 +157,39 @@ html, body {
   background: var(--surface-canvas);
   color: var(--fg-1);
 }
+
+.legal-copy > * + * {
+  margin-top: 1.25rem;
+}
+
+.legal-copy h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: var(--text-xl--line-height);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-navy-900);
+  margin-top: 2.5rem;
+}
+
+.legal-copy p,
+.legal-copy li,
+.legal-copy address {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-navy-700);
+}
+
+.legal-copy ul {
+  margin-left: 1.25rem;
+  list-style: disc;
+}
+
+.legal-copy strong {
+  color: var(--color-navy-900);
+}
+
+.legal-copy a {
+  color: var(--color-azure-700);
+  text-decoration: underline;
+}

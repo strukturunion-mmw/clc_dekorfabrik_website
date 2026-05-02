@@ -64,7 +64,7 @@ export function Footer({ tagline, groups }: FooterProps) {
         }}
       >
         <p className="py-6 font-sans text-xs text-ink-500">
-          © 2026 Dekorfabrik GmbH · Frankfurt · Alle Rechte vorbehalten.
+          © 2026 dekorfabrik.de · betrieben von strukturunion GmbH · Frankfurt.
         </p>
       </div>
     </footer>
