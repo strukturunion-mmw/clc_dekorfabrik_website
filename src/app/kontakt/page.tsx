@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/sections/PageShell";
 import { Pill } from "@/components/ui/Pill";
 import { inquiryEmail } from "@/components/siteContent";
+import { createPageMetadata } from "@/lib/metadata";
 import { ContactForm } from "./ContactForm";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Kontakt & Upload",
   description:
     "Datei hochladen, Projekt kurz beschreiben und DSGVO-konform eine Anfrage an Dekorfabrik senden.",
-};
+  path: "/kontakt",
+});
 
 const checkpoints = [
   "Name, E-Mail und kurzer Projektkontext",

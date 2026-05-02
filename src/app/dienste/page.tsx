@@ -3,6 +3,7 @@ import { PageShell } from "@/components/sections/PageShell";
 import { LinkButton } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { inquiryPath } from "@/components/siteContent";
+import { createPageMetadata } from "@/lib/metadata";
 
 const services = [
   {
@@ -89,11 +90,12 @@ const priceFactors = [
   "Zeitkritik, Schleifen für Freigabe und notwendige Revisionen",
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Dienste",
   description:
     "Überblick über Vektorisierung, Stickdatei-Digitalisierung, Druckdaten-Check und den Dekorfabrik-Ablauf von Anfrage bis Auslieferung.",
-};
+  path: "/dienste",
+});
 
 export default function ServicesPage() {
   return (

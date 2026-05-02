@@ -3,6 +3,7 @@ import { PageShell } from "@/components/sections/PageShell";
 import { LinkButton } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { inquiryPath } from "@/components/siteContent";
+import { createPageMetadata } from "@/lib/metadata";
 
 const faqGroups = [
   {
@@ -70,11 +71,12 @@ const faqGroups = [
   },
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "FAQ",
   description:
     "Antworten zu Dateiformaten, Preislogik, Ablauf, Revisionen und Anfragewegen für die Dekorfabrik-MVP-Leistungen.",
-};
+  path: "/faq",
+});
 
 export default function FaqPage() {
   return (

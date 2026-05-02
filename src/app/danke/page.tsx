@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/sections/PageShell";
 import { LinkButton } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Danke",
   description:
     "Bestätigung nach dem Absenden einer Dekorfabrik-Anfrage mit direkten Wegen zu Services, FAQ und Freebies.",
-  robots: {
-    index: false,
-    follow: false,
-  },
-};
+  path: "/danke",
+  index: false,
+  follow: false,
+});
 
 export default function ThankYouPage() {
   return (
