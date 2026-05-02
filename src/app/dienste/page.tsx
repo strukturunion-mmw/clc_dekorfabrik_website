@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageShell } from "@/components/sections/PageShell";
 import { LinkButton } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
@@ -88,6 +89,45 @@ const priceFactors = [
   "Gewünschtes Zielformat und Produktionskontext, z. B. Druck oder Stick",
   "Qualität der gelieferten Ausgangsdatei und nötige Vorarbeit",
   "Zeitkritik, Schleifen für Freigabe und notwendige Revisionen",
+];
+
+const comparisonExamples = [
+  {
+    service: "Vektorisierung",
+    title: "Aus verpixelter Vorlage wird eine klare Pfadlogik.",
+    body:
+      "Das Beispiel zeigt, wie eine unscharfe, grob gerasterte Vorlage in sauber aufgebaute Formen übersetzt wird. Entscheidend sind Kanten, Kurven und wiederverwendbare Zielformate.",
+    image: "/service-examples/vectorization-before-after.webp",
+    alt:
+      "Illustratives Vorher-Nachher-Beispiel: links verpixelte abstrakte Formen, rechts dieselben Formen mit glatten Vektorkanten.",
+  },
+  {
+    service: "Stickdatei-Digitalisierung",
+    title: "Aus flacher Grafik entsteht stickbare Struktur.",
+    body:
+      "Feine Details werden für Garn, Material und Lesbarkeit bewertet. Die Nachher-Seite zeigt eine reduzierte, strukturierte Stickwirkung statt einer direkten Pixel-zu-Stich-Kopie.",
+    image: "/service-examples/embroidery-before-after.webp",
+    alt:
+      "Illustratives Vorher-Nachher-Beispiel: links ein flach gedrucktes abstraktes Motiv, rechts eine stickbare Version mit sichtbarer Garnstruktur.",
+  },
+  {
+    service: "Druckdaten-Check",
+    title: "Aus unsicherem Layout wird eine druckfähige Übergabe.",
+    body:
+      "Beschnitt, Randabstände, Schärfe und Farbflächen werden so vorbereitet, dass Produktionsteams mit verlässlicheren Daten arbeiten können.",
+    image: "/service-examples/print-data-before-after.webp",
+    alt:
+      "Illustratives Vorher-Nachher-Beispiel: links unsaubere Druckvorlage mit schwachen Rändern, rechts korrigierte Druckdaten mit sauberem Beschnitt.",
+  },
+  {
+    service: "Datei-Aufbereitung",
+    title: "Aus losem Dateichaos wird ein sortierter Handoff.",
+    body:
+      "Zwischenstände, Exportvarianten und Produktionsunterlagen werden geordnet, damit die nächste Station klar erkennt, welche Datei wofür gedacht ist.",
+    image: "/service-examples/file-prep-before-after.webp",
+    alt:
+      "Illustratives Vorher-Nachher-Beispiel: links verstreute abstrakte Entwurfsblätter, rechts geordnete Produktionsunterlagen und Exportstapel.",
+  },
 ];
 
 export const metadata: Metadata = createPageMetadata({
@@ -197,6 +237,68 @@ export default function ServicesPage() {
                   </li>
                 ))}
               </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section
+        id="beispiele"
+        className="mx-auto max-w-content px-6 pb-16"
+        aria-labelledby="comparison-title"
+      >
+        <div className="grid gap-8 lg:grid-cols-[minmax(260px,0.72fr)_minmax(0,1.28fr)] lg:items-end">
+          <div>
+            <div className="font-brand text-xs uppercase tracking-brand text-ink-500">
+              Vorher / Nachher
+            </div>
+            <h2
+              id="comparison-title"
+              className="mt-3 font-display text-d5 font-normal text-balance text-navy-900"
+            >
+              Beispielhafte Verbesserungen nach Service-Typ.
+            </h2>
+            <p className="mt-4 font-sans text-base text-navy-700">
+              Diese Motive sind generierte Platzhalter und keine echten
+              Kundenprojekte. Sie zeigen, welche Art von Verbesserung Käufer
+              typischerweise prüfen: klarere Pfade, stickbare Vereinfachung,
+              druckfähige Ränder oder eine sauber sortierte Übergabe.
+            </p>
+          </div>
+          <div className="rounded-xl bg-navy-800 p-5 text-paper-100 shadow-md">
+            <p className="font-sans text-sm leading-6 text-navy-200">
+              Reale Vorlagen unterscheiden sich stark. Für eine belastbare
+              Einschätzung zählt immer die konkrete Datei, der Einsatzzweck und
+              die Freigabegrundlage.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
+          {comparisonExamples.map((example) => (
+            <article
+              key={example.service}
+              className="overflow-hidden rounded-xl bg-paper-50 shadow-md"
+            >
+              <Image
+                src={example.image}
+                alt={example.alt}
+                width={1536}
+                height={960}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="aspect-[16/10] w-full object-cover"
+              />
+              <div className="p-6">
+                <div className="font-brand text-xs uppercase tracking-brand text-azure-700">
+                  {example.service}
+                </div>
+                <h3 className="mt-3 font-display text-xl font-normal text-balance text-navy-900">
+                  {example.title}
+                </h3>
+                <p className="mt-4 font-sans text-sm leading-6 text-navy-700">
+                  {example.body}
+                </p>
+              </div>
             </article>
           ))}
         </div>
