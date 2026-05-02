@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/sections/PageShell";
 import { LinkButton } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
-import { inquiryMailto } from "@/components/siteContent";
+import { inquiryPath } from "@/components/siteContent";
 
 const faqGroups = [
   {
@@ -62,9 +62,9 @@ const faqGroups = [
           "Nach Ihrer Nachricht prüfen wir Datei und Zielmedium, klären Aufwand und Preisorientierung und starten erst nach Freigabe mit der Ausarbeitung. Danach folgen bei Bedarf Revisionen und die finale Auslieferung.",
       },
       {
-        question: "Wie frage ich am besten an, solange das Upload-Formular noch folgt?",
+        question: "Wie frage ich am besten mit Datei und kurzer Beschreibung an?",
         answer:
-          "Der sauberste Zwischenweg ist derzeit eine Anfrage per E-Mail mit Datei oder kurzer Beschreibung. Das eigene Upload-/Kontaktformular folgt im separaten MVP-Ticket.",
+          "Am saubersten ist jetzt das Kontakt- und Upload-Formular. Dort können Sie Datei, Zielmedium, kurze Beschreibung und DSGVO-Einwilligung direkt in einem Schritt übermitteln.",
       },
     ],
   },
@@ -104,7 +104,7 @@ export default function FaqPage() {
               <LinkButton href="/dienste" variant="secondary">
                 Leistungen ansehen
               </LinkButton>
-              <LinkButton href={inquiryMailto} variant="brand">
+              <LinkButton href={inquiryPath} variant="brand">
                 Anfrage senden <span aria-hidden="true">→</span>
               </LinkButton>
             </div>
@@ -118,7 +118,7 @@ export default function FaqPage() {
               <li>Sie müssen die richtige Leistung nicht vorab perfekt benennen.</li>
               <li>Preis und Timing richten sich nach Datei, Ziel und Aufwand.</li>
               <li>Revisionen und Freigaben werden im Ablauf berücksichtigt.</li>
-              <li>Bis zum Formular ist E-Mail der aktuelle MVP-Anfrageweg.</li>
+              <li>Das Kontaktformular bündelt Datei, Anfrage und DSGVO-Einwilligung.</li>
             </ul>
           </aside>
         </div>
