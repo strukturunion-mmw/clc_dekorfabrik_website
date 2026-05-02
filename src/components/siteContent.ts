@@ -29,6 +29,7 @@ export const siteFooterGroups = [
       { href: "/dienste#stickdateien", label: "Stickdateien" },
       { href: "/dienste#druckdaten", label: "Druckdaten-Check" },
       { href: "/dienste#dateiservice", label: "Datei-Aufbereitung" },
+      { href: "/dienste#beispiele", label: "Vorher / Nachher" },
     ],
   },
   {
