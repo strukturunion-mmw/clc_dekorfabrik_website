@@ -1,12 +1,15 @@
 import type { NavLink } from "./ui/Nav";
 
+export const inquiryEmail = "inquiries@dekorfabrik.de";
+export const inquiryPath = "/kontakt";
 export const inquiryMailto =
-  "mailto:inquiries@dekorfabrik.de?subject=Anfrage%20an%20Dekorfabrik";
+  `mailto:${inquiryEmail}?subject=Anfrage%20an%20Dekorfabrik`;
 
 export const siteNavLinks: NavLink[] = [
   { href: "/", label: "Start" },
   { href: "/dienste", label: "Dienste" },
   { href: "/faq", label: "FAQ" },
+  { href: inquiryPath, label: "Kontakt" },
 ];
 
 export const siteMarqueeItems = [
@@ -31,6 +34,7 @@ export const siteFooterGroups = [
   {
     heading: "Ablauf",
     links: [
+      { href: inquiryPath, label: "Kontakt & Upload" },
       { href: "/dienste#ablauf", label: "So arbeiten wir" },
       { href: "/dienste#preise", label: "Preislogik" },
       { href: "/faq#dateiformate", label: "Dateiformate" },

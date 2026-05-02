@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { LinkButton } from "./Button";
-import { inquiryMailto } from "../siteContent";
+import { inquiryPath } from "../siteContent";
 
 export type NavLink = {
   href: string;
@@ -25,8 +25,8 @@ const defaultActions = (
     <LinkButton variant="secondary" size="sm" href="/faq">
       FAQ ansehen
     </LinkButton>
-    <LinkButton variant="brand" size="sm" href={inquiryMailto}>
-      Anfrage senden <span aria-hidden="true">→</span>
+    <LinkButton variant="brand" size="sm" href={inquiryPath}>
+      Kontakt & Upload <span aria-hidden="true">→</span>
     </LinkButton>
   </>
 );

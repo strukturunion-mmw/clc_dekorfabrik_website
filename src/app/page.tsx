@@ -4,7 +4,7 @@ import { CardCream } from "@/components/ui/CardCream";
 import { CardFeatureNavy } from "@/components/ui/CardFeatureNavy";
 import { CtaPanel, type CtaStep } from "@/components/sections/CtaPanel";
 import { PageShell } from "@/components/sections/PageShell";
-import { inquiryMailto } from "@/components/siteContent";
+import { inquiryPath } from "@/components/siteContent";
 
 const marqueeItems = [
   "Handgezogene Vektorisierung",
@@ -51,7 +51,7 @@ export default function HomePage() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <LinkButton variant="brand" href={inquiryMailto}>
+            <LinkButton variant="brand" href={inquiryPath}>
               Datei senden & Angebot anfragen <span aria-hidden="true">→</span>
             </LinkButton>
             <LinkButton variant="secondary" href="#leistungen">
@@ -142,7 +142,7 @@ export default function HomePage() {
             </h2>
           </div>
           <LinkButton
-            href={inquiryMailto}
+            href={inquiryPath}
             variant="ghost"
             size="sm"
             className="hidden md:inline-flex"
@@ -307,7 +307,7 @@ export default function HomePage() {
             <div className="mt-auto flex items-center justify-between pt-4 font-mono text-xs text-ink-500">
               <span>svg · pdf · eps · dst</span>
               <a
-                href={inquiryMailto}
+                href={inquiryPath}
                 aria-label="Datei-Check bei Dekorfabrik anfragen"
                 className="inline-flex items-center justify-center rounded-full text-navy-900 no-underline focus:outline-none focus-visible:outline-2 focus-visible:outline-clay-500 focus-visible:outline-offset-2"
                 style={{
@@ -339,7 +339,7 @@ export default function HomePage() {
         </div>
 
         <div className="mt-8 flex md:hidden">
-          <LinkButton href={inquiryMailto} variant="ghost" size="sm">
+          <LinkButton href={inquiryPath} variant="ghost" size="sm">
             Anfrage starten →
           </LinkButton>
         </div>
@@ -363,7 +363,7 @@ export default function HomePage() {
             </>
           }
           steps={ctaSteps}
-          action={{ label: "Datei senden & Angebot anfragen", href: inquiryMailto }}
+          action={{ label: "Datei senden & Angebot anfragen", href: inquiryPath }}
         />
       </section>
     </PageShell>

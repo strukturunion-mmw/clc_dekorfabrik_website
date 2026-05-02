@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/sections/PageShell";
 import { LinkButton } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
-import { inquiryMailto } from "@/components/siteContent";
+import { inquiryPath } from "@/components/siteContent";
 
 const services = [
   {
@@ -122,7 +122,7 @@ export default function ServicesPage() {
               abläuft und wovon Preis und Bearbeitungszeit abhängen.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <LinkButton href={inquiryMailto} variant="brand">
+              <LinkButton href={inquiryPath} variant="brand">
                 Anfrage senden <span aria-hidden="true">→</span>
               </LinkButton>
               <LinkButton href="/faq" variant="secondary">
@@ -285,7 +285,7 @@ export default function ServicesPage() {
               </p>
             </div>
             <div className="mt-6 flex flex-wrap gap-3">
-              <LinkButton href={inquiryMailto} variant="brand">
+              <LinkButton href={inquiryPath} variant="brand">
                 Datei oder Briefing senden
               </LinkButton>
               <LinkButton href="/faq#preise" variant="ghost">
