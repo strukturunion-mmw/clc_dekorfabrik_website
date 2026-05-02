@@ -23,6 +23,20 @@ need_cmd npm
 need_cmd gh
 need_cmd curl
 
+detect_git_remote_failure() {
+  local stderr_file="$1"
+
+  if grep -qi 'Could not resolve host' "$stderr_file"; then
+    fail "cannot reach git remote origin (DNS/network failure resolving github.com)"
+  fi
+
+  if grep -qi 'Could not read from remote repository' "$stderr_file"; then
+    fail "cannot read from git remote origin; check GitHub access and repository permissions"
+  fi
+
+  fail "cannot reach git remote origin: $(tr '\n' ' ' < "$stderr_file" | sed 's/[[:space:]]\\+/ /g')"
+}
+
 ensure_writable_dir() {
   local dir="$1"
 
@@ -81,7 +95,11 @@ resolve_codex_home
 say "CODEX_HOME: $CODEX_HOME"
 
 git remote get-url origin >/dev/null 2>&1 || fail "git remote 'origin' is not configured"
-git ls-remote --exit-code origin HEAD >/dev/null 2>&1 || fail "cannot reach git remote origin"
+stderr_file="$(mktemp)"
+trap 'rm -f "$stderr_file"' EXIT
+if ! git ls-remote --exit-code origin HEAD >/dev/null 2>"$stderr_file"; then
+  detect_git_remote_failure "$stderr_file"
+fi
 say "git remote origin reachable"
 
 gh auth status >/dev/null 2>&1 || fail "gh is not authenticated for GitHub"

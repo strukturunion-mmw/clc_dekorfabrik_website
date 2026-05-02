@@ -11,6 +11,7 @@
     "npm": "11.13.0"
   },
   "scripts": {
+    "automation:bootstrap": "./scripts/automation-bootstrap.sh",
     "automation:preflight": "./scripts/automation-preflight.sh",
     "automation:preflight:ci": "./scripts/automation-preflight-ci.sh",
     "automation:run": "npm run automation:preflight && npm run automation:verify",

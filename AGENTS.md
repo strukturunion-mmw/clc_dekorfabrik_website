@@ -40,8 +40,10 @@ Before proposing a PR, run:
 
 ## Workflow rules
 - Start every implementation task from exactly one primary Notion Ticket ID.
+- Validate the implementation baseline before claiming work: fetch `origin`, create or reuse a fresh clean worktree from current `origin/main`, and run `direnv exec . npm run automation:preflight` there.
 - Fetch the relevant Notion ticket before changing code.
 - Every implementation task must include acceptance criteria reference(s) in Notion before moving to `in_progress`.
+- Do not move a ticket to `in_progress` until the clean-`origin/main` baseline check passes; if fetch/preflight fails, leave or return the ticket to `refined` or `blocked` with the environment failure recorded.
 - Record branch, PR link, blockers, decisions, and verification outcome on the Notion ticket.
 - Move tickets to `done` only after PR merge and verification.
 - Do not use `/planning/epics.md` or `tasks_[epic].md` as active tracking sources.

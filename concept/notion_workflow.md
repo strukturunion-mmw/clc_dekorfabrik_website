@@ -301,15 +301,16 @@ Implementation steps:
 
 1. Codex fetches the Notion ticket and related Epic.
 2. Codex verifies acceptance criteria exist.
-3. Codex claims the ticket by setting Status to `in_progress`.
-4. Codex records the branch in Notion.
-5. Codex implements the change in the repo.
-6. Codex runs verification.
-7. Codex commits task-scoped changes.
-8. Codex opens or prepares a PR.
-9. Codex records PR link and verification outcome in Notion.
-10. The ticket remains `in_progress` until the PR is merged and verified.
-11. After merge and verification, the ticket can move to `done`.
+3. Codex validates the repo baseline by fetching `origin`, creating or reusing a fresh clean worktree from current `origin/main`, and running `direnv exec . npm run automation:preflight` there.
+4. Only after baseline validation passes does Codex claim the ticket by setting Status to `in_progress`.
+5. Codex records the branch in Notion.
+6. Codex implements the change in the repo.
+7. Codex runs verification.
+8. Codex commits task-scoped changes.
+9. Codex opens or prepares a PR.
+10. Codex records PR link and verification outcome in Notion.
+11. The ticket remains `in_progress` until the PR is merged and verified.
+12. After merge and verification, the ticket can move to `done`.
 
 ## Automation Workflow
 
@@ -331,12 +332,13 @@ It must:
 2. Sort deterministically.
 3. Process only the first ticket.
 4. Validate readiness.
-5. Move the ticket to `in_progress`.
-6. Implement the ticket.
-7. Run verification.
-8. Open or prepare a draft PR.
-9. Update Notion.
-10. Never mark the ticket `done`.
+5. Validate the baseline first by fetching `origin`, creating a fresh clean worktree from current `origin/main`, and running `direnv exec . npm run automation:preflight` there.
+6. Move the ticket to `in_progress` only after that baseline check succeeds.
+7. Implement the ticket.
+8. Run verification.
+9. Open or prepare a draft PR.
+10. Update Notion.
+11. Never mark the ticket `done`.
 
 ### Automation Prompt
 
@@ -345,7 +347,7 @@ Use this prompt for a Codex cron automation:
 ```text
 Use $implement-refined-notion-ticket for the Dekorfabrik website project.
 
-Check the Dekorfabrik Website Notion Tickets database for tickets with Status `refined`. If one or more exist, process only the first ticket according to the skill workflow: validate readiness, claim it by moving it to `in_progress`, implement it on a task-scoped branch, run verification, open or prepare a draft PR, and update the Notion ticket with branch, PR link if available, blockers, decisions, and verification outcome.
+Check the Dekorfabrik Website Notion Tickets database for tickets with Status `refined`. If one or more exist, process only the first ticket according to the skill workflow: validate readiness, validate the clean `origin/main` baseline, claim it by moving it to `in_progress` only after that baseline succeeds, implement it on a task-scoped branch, run verification, open or prepare a draft PR, and update the Notion ticket with branch, PR link if available, blockers, decisions, and verification outcome.
 
 If no refined tickets exist, make no code changes. If the Notion schema lacks the `refined` status option or required connectors are unavailable, stop and report the blocker.
 ```
