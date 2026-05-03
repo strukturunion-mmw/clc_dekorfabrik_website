@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Pill } from "@/components/ui/Pill";
 import { LinkButton } from "@/components/ui/Button";
 import { CardCream } from "@/components/ui/CardCream";
@@ -190,7 +191,7 @@ export default function HomePage() {
             </p>
             <div className="mt-auto flex items-center justify-between pt-4 font-sans text-xs text-navy-200">
               <span>DST · PES · EXP · Produktionsklar</span>
-              <a
+              <Link
                 href="/dienste#stickdateien"
                 aria-label="Mehr zur Stickdatei-Digitalisierung"
                 className="inline-flex items-center justify-center rounded-full text-paper-100 no-underline focus:outline-none focus-visible:outline-2 focus-visible:outline-paper-100 focus-visible:outline-offset-2"
@@ -218,7 +219,7 @@ export default function HomePage() {
                   <path d="M7 17L17 7" />
                   <path d="M8 7h9v9" />
                 </svg>
-              </a>
+              </Link>
             </div>
           </article>
 
@@ -253,7 +254,7 @@ export default function HomePage() {
             </p>
             <div className="mt-auto flex items-center justify-between pt-4 font-sans text-xs text-navy-900/70">
               <span>Upload · Check · Freigabe · Lieferung</span>
-              <a
+              <Link
                 href="/dienste#ablauf"
                 aria-label="Mehr zum Ablauf von Prüfung und Freigabe"
                 className="inline-flex items-center justify-center rounded-full text-navy-900 no-underline focus:outline-none focus-visible:outline-2 focus-visible:outline-clay-500 focus-visible:outline-offset-2"
@@ -280,7 +281,7 @@ export default function HomePage() {
                   <path d="M7 17L17 7" />
                   <path d="M8 7h9v9" />
                 </svg>
-              </a>
+              </Link>
             </div>
           </article>
 

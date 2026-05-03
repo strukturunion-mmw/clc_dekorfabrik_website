@@ -3,59 +3,9 @@ import Image from "next/image";
 import { PageShell } from "@/components/sections/PageShell";
 import { LinkButton } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
+import { serviceDetails } from "@/components/serviceDetails";
 import { inquiryPath } from "@/components/siteContent";
 import { createPageMetadata } from "@/lib/metadata";
-
-const services = [
-  {
-    id: "vektorisierung",
-    eyebrow: "Kernleistung 01",
-    title: "Vektorisierung von Logos, Grafiken und Vorlagen",
-    body:
-      "Wir bauen unsaubere Pixelgrafiken sauber als skalierbare Vektordatei neu auf. Geeignet für Druck, Beschriftung, Textilproduktion und Agentur-Weitergabe.",
-    bullets: [
-      "Saubere Pfade statt Autotrace-Artefakte",
-      "Geeignet für Druck, Plot, Stickvorstufe und Weiterverarbeitung",
-      "Ausgabe z. B. als SVG, PDF oder EPS nach Einsatzkontext",
-    ],
-  },
-  {
-    id: "stickdateien",
-    eyebrow: "Kernleistung 02",
-    title: "Stickdatei-Digitalisierung für maschinenlesbare Produktion",
-    body:
-      "Wir übersetzen Ihr Motiv in eine nachvollziehbare Stickdatei mit sinnvoller Stichrichtung, Unterlage und Reduktion von Problemstellen.",
-    bullets: [
-      "Abstimmung auf Motiv, Material und Produktionsziel",
-      "Revisionen vor finaler Freigabe eingeplant",
-      "Geeignet für wiederholbare Produktion statt Zufallsergebnis",
-    ],
-  },
-  {
-    id: "druckdaten",
-    eyebrow: "Kernleistung 03",
-    title: "Druckdaten-Check und druckfertige Aufbereitung",
-    body:
-      "Wir prüfen Beschnitt, Farbmodus, Auflösung und Formatlogik und bringen bestehende Dateien in einen Zustand, den Produktionsteams sauber weiterverarbeiten können.",
-    bullets: [
-      "Prüfung von CMYK-/Sonderfarb-Anlage und Format",
-      "Klare Hinweise, wenn Ausgangsdaten ungeeignet sind",
-      "Aufbereitung für Freigabe, Druck oder Weitergabe an Partner",
-    ],
-  },
-  {
-    id: "dateiservice",
-    eyebrow: "Kernleistung 04",
-    title: "Datei-Aufbereitung für Übergaben an Druck und Produktion",
-    body:
-      "Wenn bereits Entwürfe oder Zwischenstände vorhanden sind, helfen wir bei Formatbereinigung, Exportlogik und sauberer Übergabe an die nächste Produktionsstufe.",
-    bullets: [
-      "Unterstützung bei angelieferten Fremd- oder AI-Dateien",
-      "Klare Einordnung, welche Leistung tatsächlich gebraucht wird",
-      "DACH-kompatible Abstimmung auf Deutsch statt Tool-Rätselraten",
-    ],
-  },
-];
 
 const processSteps = [
   {
@@ -209,10 +159,10 @@ export default function ServicesPage() {
         </div>
 
         <div className="mt-10 grid gap-4 md:grid-cols-2">
-          {services.map((service, index) => (
+          {serviceDetails.map((service, index) => (
             <article
-              key={service.id}
-              id={service.id}
+              key={service.slug}
+              id={service.anchorId}
               className={[
                 "rounded-xl p-6 shadow-md",
                 index % 2 === 0
@@ -227,16 +177,21 @@ export default function ServicesPage() {
                 {service.title}
               </h3>
               <p className="mt-4 font-sans text-sm leading-6 text-current/80">
-                {service.body}
+                {service.description}
               </p>
               <ul className="mt-6 space-y-2 font-sans text-sm text-current/85" role="list">
-                {service.bullets.map((bullet) => (
+                {service.outputs.slice(0, 3).map((bullet) => (
                   <li key={bullet} className="flex gap-3">
                     <span aria-hidden="true">•</span>
                     <span>{bullet}</span>
                   </li>
                 ))}
               </ul>
+              <div className="mt-6">
+                <LinkButton href={`/dienste/${service.slug}`} variant="ghost" size="sm">
+                  Detailseite ansehen <span aria-hidden="true">→</span>
+                </LinkButton>
+              </div>
             </article>
           ))}
         </div>
