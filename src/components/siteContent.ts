@@ -25,10 +25,10 @@ export const siteFooterGroups = [
   {
     heading: "Dienste",
     links: [
-      { href: "/dienste#vektorisierung", label: "Vektorisierung" },
-      { href: "/dienste#stickdateien", label: "Stickdateien" },
-      { href: "/dienste#druckdaten", label: "Druckdaten-Check" },
-      { href: "/dienste#dateiservice", label: "Datei-Aufbereitung" },
+      { href: "/dienste/vektorisierung", label: "Vektorisierung" },
+      { href: "/dienste/stickdatei-digitalisierung", label: "Stickdateien" },
+      { href: "/dienste/druckdaten-check", label: "Druckdaten-Check" },
+      { href: "/dienste/datei-aufbereitung", label: "Datei-Aufbereitung" },
       { href: "/dienste#beispiele", label: "Vorher / Nachher" },
     ],
   },
