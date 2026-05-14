@@ -44,3 +44,8 @@ next-env.d.ts.bak
 # IDE
 .vscode
 .idea
+
+# Mac-mini-only dev/preview infrastructure (see mac-mini-dev/README.md).
+# This folder is preserved in Mac-mini backups but never lands on origin/main.
+/mac-mini-dev/
+
