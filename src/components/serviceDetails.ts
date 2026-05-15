@@ -1,5 +1,7 @@
+import type { ServiceSlug } from "@/lib/pricing/types";
+
 export type ServiceDetail = {
-  slug: string;
+  slug: ServiceSlug;
   anchorId: string;
   eyebrow: string;
   title: string;

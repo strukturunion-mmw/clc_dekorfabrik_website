@@ -17,6 +17,12 @@ import {
 const inputBaseClassName =
   "mt-2 w-full rounded-lg border border-ink-200/70 bg-paper-100 px-4 py-3 font-sans text-sm text-navy-900 shadow-xs outline-none transition-colors duration-base focus:border-clay-500";
 
+type ContactFormProps = {
+  estimatorSummary?: string;
+  estimatorContext?: string;
+  detailsPrefill?: string;
+};
+
 function FieldError({ id, message }: { id: string; message?: string }) {
   if (!message) {
     return null;
@@ -29,7 +35,11 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
-export function ContactForm() {
+export function ContactForm({
+  estimatorSummary = "",
+  estimatorContext = "",
+  detailsPrefill = "",
+}: ContactFormProps) {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({});
@@ -41,6 +51,8 @@ export function ContactForm() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+    formData.set("estimatorContext", estimatorContext);
+
     const values = getContactValues(formData);
     const validationErrors = validateContactValues(values);
 
@@ -102,6 +114,14 @@ export function ContactForm() {
       onSubmit={handleSubmit}
       noValidate
     >
+      {estimatorSummary ? (
+        <div className="mb-6 rounded-lg border border-sky-200 bg-sky-100 px-4 py-3">
+          <p className="font-sans text-sm text-navy-800">
+            Preisorientierung übernommen: {estimatorSummary}
+          </p>
+        </div>
+      ) : null}
+
       <div className="grid gap-5 md:grid-cols-2">
         <label className="block font-sans text-sm text-navy-800">
           <span className="font-medium">Name *</span>
@@ -149,6 +169,7 @@ export function ContactForm() {
           <textarea
             name="details"
             rows={6}
+            defaultValue={detailsPrefill}
             className={`${inputBaseClassName} min-h-40 resize-y`}
             aria-invalid={fieldErrors.details ? "true" : undefined}
             aria-describedby={fieldErrors.details ? "contact-details-error" : undefined}

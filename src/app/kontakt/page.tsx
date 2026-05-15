@@ -5,6 +5,36 @@ import { inquiryEmail } from "@/components/siteContent";
 import { createPageMetadata } from "@/lib/metadata";
 import { ContactForm } from "./ContactForm";
 
+function getEstimatorContextFromSearchParams(searchParams: URLSearchParams) {
+  const serviceLabel = searchParams.get("estimatorServiceLabel")?.trim();
+  const estimatorKindLabel = searchParams.get("estimatorKindLabel")?.trim();
+  const selectionLabel = searchParams.get("estimatorSelectionLabel")?.trim();
+  const estimateLabel = searchParams.get("estimatorEstimateLabel")?.trim();
+
+  if (!serviceLabel || !estimatorKindLabel || !selectionLabel || !estimateLabel) {
+    return {
+      summary: "",
+      detailsPrefill: "",
+      structured: "",
+    };
+  }
+
+  const summary = `${serviceLabel} · ${estimatorKindLabel} · ${selectionLabel} · ${estimateLabel}`;
+  const detailsPrefill = `Preisorientierung: ${estimateLabel} (${estimatorKindLabel}, ${selectionLabel}) für ${serviceLabel}.`;
+  const structured = [
+    `Service: ${serviceLabel}`,
+    `Leistungsart: ${estimatorKindLabel}`,
+    `Auswahl: ${selectionLabel}`,
+    `Preisorientierung (netto): ${estimateLabel}`,
+  ].join("\n");
+
+  return {
+    summary,
+    detailsPrefill,
+    structured,
+  };
+}
+
 export const metadata: Metadata = createPageMetadata({
   title: "Kontakt & Upload",
   description:
@@ -19,7 +49,27 @@ const checkpoints = [
   "Antwort an inquiries@dekorfabrik.de",
 ];
 
-export default function ContactPage() {
+type ContactPageProps = {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
+
+export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const resolvedParams = searchParams ? await searchParams : {};
+  const query = new URLSearchParams();
+
+  Object.entries(resolvedParams).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((entry) => query.append(key, entry));
+      return;
+    }
+
+    if (value) {
+      query.set(key, value);
+    }
+  });
+
+  const estimatorContext = getEstimatorContextFromSearchParams(query);
+
   return (
     <PageShell>
       <section
@@ -87,7 +137,11 @@ export default function ContactPage() {
             Alles in einem Schritt übermitteln.
           </h2>
         </div>
-        <ContactForm />
+        <ContactForm
+          estimatorSummary={estimatorContext.summary}
+          estimatorContext={estimatorContext.structured}
+          detailsPrefill={estimatorContext.detailsPrefill}
+        />
       </section>
     </PageShell>
   );

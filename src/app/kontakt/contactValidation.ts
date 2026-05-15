@@ -27,6 +27,7 @@ export type ContactFormValues = {
   email: string;
   phone: string;
   details: string;
+  estimatorContext: string;
   consent: boolean;
   files: File[];
 };
@@ -88,6 +89,10 @@ export function validateContactValues(values: ContactFormValues) {
     errors.details = "Die Beschreibung ist zu lang. Bitte kürzen Sie den Text.";
   }
 
+  if (values.estimatorContext.length > 600) {
+    errors.form = "Kontextdaten der Preisorientierung sind ungültig. Bitte Seite neu laden.";
+  }
+
   if (!values.consent) {
     errors.consent = "Bitte bestätigen Sie die Datenschutzhinweise.";
   }
@@ -132,6 +137,7 @@ export function getContactValues(formData: FormData): ContactFormValues {
     email: String(formData.get("email") ?? "").trim().toLowerCase(),
     phone: String(formData.get("phone") ?? "").trim(),
     details: String(formData.get("details") ?? "").trim(),
+    estimatorContext: String(formData.get("estimatorContext") ?? "").trim(),
     consent: formData.get("consent") === "on",
     files,
   };

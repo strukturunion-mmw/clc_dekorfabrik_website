@@ -46,6 +46,7 @@ function buildTextPart(input: {
   email: string;
   phone: string;
   details: string;
+  estimatorContext: string;
   consentAt: string;
   files: File[];
 }) {
@@ -60,6 +61,9 @@ function buildTextPart(input: {
     "Projektbeschreibung:",
     input.details,
     "",
+    "Preisorientierungskontext:",
+    input.estimatorContext || "nicht angegeben",
+    "",
     "Dateien:",
     ...input.files.map((file) => `- ${file.name} (${Math.ceil(file.size / 1024)} KB)`),
   ];
@@ -72,6 +76,7 @@ function buildHtmlPart(input: {
   email: string;
   phone: string;
   details: string;
+  estimatorContext: string;
   consentAt: string;
   files: File[];
 }) {
@@ -83,6 +88,8 @@ function buildHtmlPart(input: {
     <p><strong>Datenschutz bestätigt am:</strong> ${escapeHtml(input.consentAt)}</p>
     <h3>Projektbeschreibung</h3>
     <p>${escapeHtml(input.details).replaceAll("\n", "<br />")}</p>
+    <h3>Preisorientierungskontext</h3>
+    <p>${escapeHtml(input.estimatorContext || "nicht angegeben").replaceAll("\n", "<br />")}</p>
     <h3>Dateien</h3>
     <ul>
       ${input.files
