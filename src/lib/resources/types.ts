@@ -4,6 +4,13 @@ export type ServiceSlug =
   | "druckdaten-check"
   | "datei-aufbereitung";
 
+export const serviceLabels: Record<ServiceSlug, string> = {
+  vektorisierung: "Vektorisierung",
+  "stickdatei-digitalisierung": "Stickdatei-Digitalisierung",
+  "druckdaten-check": "Druckdaten-Check",
+  "datei-aufbereitung": "Datei-Aufbereitung",
+};
+
 export const resourceCategories = [
   {
     slug: "dateivorbereitung",
@@ -39,12 +46,14 @@ export type ResourceSeoMetadata = {
 export type ResourceDocument = {
   slug: string;
   title: string;
-  summary: string;
+  excerpt: string;
   category: ResourceCategorySlug;
   contentType: ResourceContentType;
   serviceTags: ServiceSlug[];
   publishDate: string;
-  readingTime: number;
+  updatedDate: string;
+  readingMinutes: number;
+  author: string;
   seo: ResourceSeoMetadata;
   body: string;
 };
@@ -67,4 +76,8 @@ export function getResourceCategory(slug: ResourceCategorySlug) {
 
 export function getResourceContentTypeLabel(contentType: ResourceContentType) {
   return contentTypeLabels[contentType];
+}
+
+export function getServiceLabel(serviceSlug: ServiceSlug) {
+  return serviceLabels[serviceSlug];
 }

@@ -5,9 +5,11 @@ import { PageShell } from "@/components/sections/PageShell";
 import { LinkButton } from "@/components/ui/Button";
 import { createPageMetadata } from "@/lib/metadata";
 import { getAllResources, getResourceBySlug } from "@/lib/resources/catalog";
+import { getResourceArticleSchema } from "@/lib/resources/schemaOrg";
 import {
   getResourceCategory,
   getResourceContentTypeLabel,
+  getServiceLabel,
   type ResourceDocument,
 } from "@/lib/resources/types";
 
@@ -113,6 +115,7 @@ export default async function ResourceDetailPage({ params }: ResourcePageProps) 
 
   const category = getResourceCategory(resource.category);
   const contentBlocks = parseMarkdown(resource);
+  const articleSchema = getResourceArticleSchema(resource);
 
   return (
     <PageShell>
@@ -146,7 +149,7 @@ export default async function ResourceDetailPage({ params }: ResourcePageProps) 
             <span className="font-brand uppercase tracking-brand text-ink-500">
               {getResourceContentTypeLabel(resource.contentType)}
             </span>
-            <span className="font-mono uppercase text-ink-500">{resource.readingTime} Min</span>
+            <span className="font-mono uppercase text-ink-500">{resource.readingMinutes} Min</span>
           </div>
 
           <h1
@@ -156,10 +159,17 @@ export default async function ResourceDetailPage({ params }: ResourcePageProps) 
             {resource.title}
           </h1>
 
-          <p className="mt-4 font-sans text-md text-navy-700">{resource.summary}</p>
+          <p className="mt-4 font-sans text-md text-navy-700">{resource.excerpt}</p>
 
           <p className="mt-4 font-mono text-xs uppercase tracking-wide text-ink-500">
             Veröffentlicht am {formatPublishDate(resource.publishDate)}
+            <span className="mx-2" aria-hidden="true">
+              •
+            </span>
+            Aktualisiert am {formatPublishDate(resource.updatedDate)}
+          </p>
+          <p className="mt-2 font-mono text-xs uppercase tracking-wide text-ink-500">
+            Autor: {resource.author}
           </p>
         </header>
 
@@ -201,6 +211,20 @@ export default async function ResourceDetailPage({ params }: ResourcePageProps) 
           })}
         </article>
 
+        <div className="mt-8 max-w-3xl" aria-label="Zugeordnete Services">
+          <p className="font-sans text-xs font-medium uppercase tracking-wide text-ink-500">Passende Services</p>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {resource.serviceTags.map((serviceTag) => (
+              <li
+                key={serviceTag}
+                className="rounded-pill border border-navy-900/15 bg-paper-100 px-3 py-1 font-sans text-xs text-navy-800"
+              >
+                {getServiceLabel(serviceTag)}
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <section className="mt-12 max-w-3xl rounded-xl bg-paper-50 p-6 shadow-md" aria-labelledby="resource-cta-title">
           <h2 id="resource-cta-title" className="font-display text-2xl font-normal text-navy-900">
             Nächster Schritt
@@ -224,6 +248,11 @@ export default async function ResourceDetailPage({ params }: ResourcePageProps) 
             </LinkButton>
           </div>
         </section>
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        />
       </section>
     </PageShell>
   );

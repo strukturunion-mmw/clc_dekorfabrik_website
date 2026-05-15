@@ -1,11 +1,14 @@
 ---
 title: Vektor vs. Pixel bei Logos
-summary: Wann Logos als Vektor vorliegen sollten und wo Pixeldateien im Produktionsprozess Probleme erzeugen.
+slug: vektor-vs-pixel-fuer-logos
+author: Dekorfabrik Team
 category: vektorisierung
 contentType: tutorial
 serviceTags: vektorisierung
 publishDate: 2026-05-07
-readingTime: 6
+updatedDate: 2026-05-07
+readingMinutes: 6
+excerpt: Wann Logos als Vektor vorliegen sollten und wo Pixeldateien im Produktionsprozess Probleme erzeugen.
 seoTitle: Vektor oder Pixel? Praxisleitfaden für Logo-Dateien
 seoDescription: Verständliche Entscheidungshilfe für skalierbare Logo-Daten und saubere Produktionsübergaben.
 ---

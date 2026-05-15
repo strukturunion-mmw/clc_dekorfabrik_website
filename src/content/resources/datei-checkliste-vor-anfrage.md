@@ -1,11 +1,14 @@
 ---
 title: Datei-Checkliste vor der Anfrage
-summary: Welche Angaben helfen, damit Dekorfabrik die passende Produktionslösung schnell einordnen kann.
+slug: datei-checkliste-vor-anfrage
+author: Dekorfabrik Team
 category: dateivorbereitung
 contentType: guide
 serviceTags: datei-aufbereitung,druckdaten-check
 publishDate: 2026-05-10
-readingTime: 5
+updatedDate: 2026-05-10
+readingMinutes: 5
+excerpt: Welche Angaben helfen, damit Dekorfabrik die passende Produktionslösung schnell einordnen kann.
 seoTitle: Datei-Checkliste für Druck- und Produktionsanfragen
 seoDescription: Strukturierte Checkliste für Dateien, Formate und Projektinfos vor einer Anfrage bei Dekorfabrik.
 ---

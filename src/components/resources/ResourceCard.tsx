@@ -36,12 +36,12 @@ export function ResourceCard({ resource }: ResourceCardProps) {
         </Link>
       </h2>
 
-      <p className="mt-3 font-sans text-sm leading-6 text-navy-700">{resource.summary}</p>
+      <p className="mt-3 font-sans text-sm leading-6 text-navy-700">{resource.excerpt}</p>
 
       <div className="mt-5 flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase text-ink-500">
         <span>{formatPublishDate(resource.publishDate)}</span>
         <span aria-hidden="true">•</span>
-        <span>{resource.readingTime} Min Lesezeit</span>
+        <span>{resource.readingMinutes} Min Lesezeit</span>
       </div>
     </article>
   );

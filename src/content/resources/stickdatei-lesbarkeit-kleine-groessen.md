@@ -1,11 +1,14 @@
 ---
 title: Stickdateien bei kleinen Größen lesbar halten
-summary: Wie Motive für kleine Platzierungen vorbereitet werden, ohne dass Details im Garn verloren gehen.
+slug: stickdatei-lesbarkeit-kleine-groessen
+author: Dekorfabrik Team
 category: stickdateien
 contentType: guide
 serviceTags: stickdatei-digitalisierung
 publishDate: 2026-05-03
-readingTime: 4
+updatedDate: 2026-05-03
+readingMinutes: 4
+excerpt: Wie Motive für kleine Platzierungen vorbereitet werden, ohne dass Details im Garn verloren gehen.
 seoTitle: Stickdatei-Tipps für kleine Logos und Platzierungen
 seoDescription: Grundlagen zur Motivvereinfachung, Stichlogik und Lesbarkeit bei kleinen Stickflächen.
 ---
