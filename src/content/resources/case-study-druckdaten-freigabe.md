@@ -1,11 +1,14 @@
 ---
 title: Case Study: Druckdaten-Freigabe ohne Last-Minute-Korrektur
-summary: Wie eine strukturierte Vorprüfung kurzfristige Produktionsprobleme vor dem Druck verhindert hat.
+slug: case-study-druckdaten-freigabe
+author: Dekorfabrik Team
 category: druckdaten
 contentType: case-study
 serviceTags: druckdaten-check,datei-aufbereitung
 publishDate: 2026-04-29
-readingTime: 7
+updatedDate: 2026-04-29
+readingMinutes: 7
+excerpt: Wie eine strukturierte Vorprüfung kurzfristige Produktionsprobleme vor dem Druck verhindert hat.
 seoTitle: Case Study Druckdaten-Check vor Produktionsfreigabe
 seoDescription: Praxisbeispiel aus der Druckdaten-Prüfung mit Fokus auf Beschnitt, Farbmodus und Freigabeablauf.
 ---
