@@ -4,6 +4,8 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button, LinkButton } from "@/components/ui/Button";
 import { inquiryMailto } from "@/components/siteContent";
+import { getContentJourneyAttribution } from "@/lib/analytics/contentAttribution";
+import { trackEvent } from "@/lib/analytics/track";
 import {
   CONTACT_ALLOWED_EXTENSIONS,
   CONTACT_MAX_FILES,
@@ -68,6 +70,17 @@ export function ContactForm() {
               },
         );
         return;
+      }
+
+      const contentAttribution = getContentJourneyAttribution(
+        new URLSearchParams(window.location.search),
+      );
+
+      if (contentAttribution) {
+        trackEvent("contact_form_submit_from_content", {
+          ...contentAttribution,
+          destinationPath: "/kontakt",
+        });
       }
 
       formRef.current?.reset();
