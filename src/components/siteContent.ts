@@ -8,6 +8,7 @@ export const inquiryMailto =
 export const siteNavLinks: NavLink[] = [
   { href: "/", label: "Start" },
   { href: "/dienste", label: "Dienste" },
+  { href: "/wissen", label: "Wissen" },
   { href: "/faq", label: "FAQ" },
   { href: inquiryPath, label: "Kontakt" },
 ];
