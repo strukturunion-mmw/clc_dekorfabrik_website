@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ResourceCard } from "@/components/resources/ResourceCard";
 import { PageShell } from "@/components/sections/PageShell";
 import { serviceDetails, getServiceDetail } from "@/components/serviceDetails";
 import { inquiryPath } from "@/components/siteContent";
@@ -8,6 +9,8 @@ import { LinkButton } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { ServicePricingEstimator } from "@/components/pricing/ServicePricingEstimator";
 import { createPageMetadata } from "@/lib/metadata";
+import { getAllResources } from "@/lib/resources/catalog";
+import { getRelatedResourcesForService } from "@/lib/resources/internalLinks";
 
 type ServicePageProps = {
   params: Promise<{
@@ -43,6 +46,9 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
   if (!service) {
     notFound();
   }
+
+  const resources = await getAllResources();
+  const relatedResources = getRelatedResourcesForService(resources, service.slug);
 
   return (
     <PageShell>
@@ -141,6 +147,37 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
           serviceTitle={service.shortTitle}
         />
       </section>
+
+      {relatedResources.length ? (
+        <section
+          className="mx-auto max-w-content px-6 pb-14"
+          aria-labelledby="related-resource-title"
+        >
+          <div className="grid gap-8 lg:grid-cols-[minmax(260px,0.68fr)_minmax(0,1.32fr)]">
+            <div>
+              <div className="font-brand text-xs uppercase tracking-brand text-ink-500">
+                Weiterführende Inhalte
+              </div>
+              <h2
+                id="related-resource-title"
+                className="mt-3 font-display text-d5 font-normal text-balance text-navy-900"
+              >
+                Passende Wissensbeiträge zu dieser Leistung.
+              </h2>
+              <p className="mt-4 font-sans text-base leading-7 text-navy-700">
+                Diese Beiträge vertiefen typische Entscheidungen und helfen bei
+                der Vorbereitung von Anfrage und Freigabe.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {relatedResources.map((resource) => (
+                <ResourceCard key={resource.slug} resource={resource} />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section
         className="mx-auto max-w-content px-6 pb-14"
