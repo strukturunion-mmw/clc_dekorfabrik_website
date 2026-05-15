@@ -6,6 +6,7 @@ import { serviceDetails, getServiceDetail } from "@/components/serviceDetails";
 import { inquiryPath } from "@/components/siteContent";
 import { LinkButton } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
+import { ServicePricingEstimator } from "@/components/pricing/ServicePricingEstimator";
 import { createPageMetadata } from "@/lib/metadata";
 
 type ServicePageProps = {
@@ -129,6 +130,16 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
             ))}
           </div>
         </div>
+      </section>
+
+      <section
+        className="mx-auto max-w-content px-6 pb-14"
+        aria-labelledby="service-estimator-title"
+      >
+        <ServicePricingEstimator
+          serviceSlug={service.slug}
+          serviceTitle={service.shortTitle}
+        />
       </section>
 
       <section
