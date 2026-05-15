@@ -1,19 +1,29 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl } from "@/lib/metadata";
 import { serviceDetails } from "@/components/serviceDetails";
+import { absoluteUrl } from "@/lib/metadata";
+import { getAllResources } from "@/lib/resources/catalog";
+import { resourceCategories } from "@/lib/resources/types";
 
-const indexableRoutes = [
-  "/",
-  "/dienste",
-  ...serviceDetails.map((service) => `/dienste/${service.slug}`),
-  "/faq",
-  "/kontakt",
-] as const;
+const staticRoutes = ["/", "/dienste", "/wissen", "/faq", "/kontakt"] as const;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [resources] = await Promise.all([getAllResources()]);
   const lastModified = new Date();
 
-  return indexableRoutes.map((route) => ({
+  const serviceRoutes = serviceDetails.map((service) => `/dienste/${service.slug}` as const);
+  const categoryRoutes = resourceCategories.map(
+    (category) => `/wissen/kategorie/${category.slug}` as const,
+  );
+  const resourceRoutes = resources.map((resource) => `/wissen/${resource.slug}` as const);
+
+  const routes = [
+    ...staticRoutes,
+    ...serviceRoutes,
+    ...categoryRoutes,
+    ...resourceRoutes,
+  ];
+
+  return routes.map((route) => ({
     url: absoluteUrl(route),
     lastModified,
     changeFrequency: route === "/" ? "weekly" : "monthly",
