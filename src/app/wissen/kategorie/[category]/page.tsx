@@ -18,7 +18,7 @@ import {
 
 type CategoryPageProps = {
   params: Promise<{ category: string }>;
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string | string[] }>;
 };
 
 export function generateStaticParams() {
@@ -47,6 +47,7 @@ export default async function ResourceCategoryPage({
 }: CategoryPageProps) {
   const { category } = await params;
   const { q } = await searchParams;
+  const normalizedQuery = Array.isArray(q) ? (q[0] ?? "") : (q ?? "");
 
   if (!isResourceCategorySlug(category)) {
     notFound();
@@ -60,7 +61,7 @@ export default async function ResourceCategoryPage({
     getResourceCategorySummaries(),
   ]);
 
-  const filteredResources = filterResourcesByKeyword(resourcesInCategory, q ?? "");
+  const filteredResources = filterResourcesByKeyword(resourcesInCategory, normalizedQuery);
   const countsByCategory = Object.fromEntries(
     categorySummaries.map((categorySummary) => [categorySummary.slug, categorySummary.count]),
   );
@@ -90,7 +91,7 @@ export default async function ResourceCategoryPage({
             <input
               id="wissen-category-search"
               name="q"
-              defaultValue={q ?? ""}
+              defaultValue={normalizedQuery}
               className="h-11 min-w-[240px] flex-1 rounded-pill border border-navy-900/20 bg-paper-50 px-4 font-sans text-sm text-navy-900 outline-none transition-colors focus:border-clay-500"
               placeholder="z. B. Dateiformat, Freigabe, Lesbarkeit"
             />
@@ -107,7 +108,7 @@ export default async function ResourceCategoryPage({
           <ResourceFilterBar
             activeCategory={typedCategory}
             countsByCategory={countsByCategory}
-            keyword={q}
+            keyword={normalizedQuery}
           />
         </div>
 
@@ -121,7 +122,7 @@ export default async function ResourceCategoryPage({
           <article className="mt-8 rounded-xl border border-navy-900/15 bg-paper-50 p-6">
             <h2 className="font-display text-xl font-normal text-navy-900">Keine Artikel in dieser Kategorie gefunden</h2>
             <p className="mt-3 font-sans text-sm leading-6 text-navy-700">
-              Für den Suchbegriff „{q}“ gibt es in {categoryMeta.label} aktuell
+              Für den Suchbegriff „{normalizedQuery}“ gibt es in {categoryMeta.label} aktuell
               keinen passenden Beitrag. Du kannst über „Alle“ zurück zur
               Gesamtübersicht wechseln.
             </p>

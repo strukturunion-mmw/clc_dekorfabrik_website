@@ -10,7 +10,7 @@ import {
 } from "@/lib/resources/catalog";
 
 type WissenPageProps = {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string | string[] }>;
 };
 
 export const metadata: Metadata = createPageMetadata({
@@ -22,9 +22,10 @@ export const metadata: Metadata = createPageMetadata({
 
 export default async function WissenPage({ searchParams }: WissenPageProps) {
   const { q } = await searchParams;
+  const normalizedQuery = Array.isArray(q) ? (q[0] ?? "") : (q ?? "");
   const resources = await getAllResources();
   const categorySummaries = await getResourceCategorySummaries();
-  const filteredResources = filterResourcesByKeyword(resources, q ?? "");
+  const filteredResources = filterResourcesByKeyword(resources, normalizedQuery);
 
   const countsByCategory = Object.fromEntries(
     categorySummaries.map((category) => [category.slug, category.count]),
@@ -56,7 +57,7 @@ export default async function WissenPage({ searchParams }: WissenPageProps) {
             <input
               id="wissen-search"
               name="q"
-              defaultValue={q ?? ""}
+              defaultValue={normalizedQuery}
               className="h-11 min-w-[240px] flex-1 rounded-pill border border-navy-900/20 bg-paper-50 px-4 font-sans text-sm text-navy-900 outline-none transition-colors focus:border-clay-500"
               placeholder="z. B. Beschnitt, Stickgröße, Vektor"
             />
@@ -70,7 +71,7 @@ export default async function WissenPage({ searchParams }: WissenPageProps) {
         </form>
 
         <div className="mt-8">
-          <ResourceFilterBar countsByCategory={countsByCategory} keyword={q} />
+          <ResourceFilterBar countsByCategory={countsByCategory} keyword={normalizedQuery} />
         </div>
 
         {filteredResources.length ? (
@@ -83,7 +84,7 @@ export default async function WissenPage({ searchParams }: WissenPageProps) {
           <article className="mt-8 rounded-xl border border-navy-900/15 bg-paper-50 p-6">
             <h2 className="font-display text-xl font-normal text-navy-900">Keine Treffer gefunden</h2>
             <p className="mt-3 font-sans text-sm leading-6 text-navy-700">
-              Für den Suchbegriff „{q}“ gibt es aktuell keinen passenden Artikel.
+              Für den Suchbegriff „{normalizedQuery}“ gibt es aktuell keinen passenden Artikel.
               Bitte versuche einen allgemeineren Begriff oder starte über die
               Kategorie-Filter.
             </p>
