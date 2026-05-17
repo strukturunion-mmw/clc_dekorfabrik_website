@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { PageShell } from "@/components/sections/PageShell";
 import { LogoutButton } from "@/components/auth/LogoutButton";
-import { createPageMetadata } from "@/lib/metadata";
+import { AUTH_SESSION_COOKIE_NAME } from "@/lib/auth/constants";
 import { getCurrentSessionUser } from "@/lib/auth/session";
+import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Mein Konto",
@@ -16,9 +18,15 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default async function AccountDashboardPage() {
+  const cookieStore = await cookies();
+  const hasSessionCookie = Boolean(cookieStore.get(AUTH_SESSION_COOKIE_NAME)?.value);
   const user = await getCurrentSessionUser();
 
   if (!user) {
+    if (hasSessionCookie) {
+      redirect("/api/auth/logout?redirectTo=%2Fkonto%2Fanmelden");
+    }
+
     redirect("/konto/anmelden");
   }
 
