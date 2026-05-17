@@ -31,6 +31,15 @@ export type AnalyticsEventMap = {
     targetServiceSlug: string | null;
     destinationPath: string;
   };
+  signup_started: {
+    entryPath: string;
+  };
+  signup_completed: {
+    entryPath: string;
+  };
+  login_completed: {
+    entryPath: string;
+  };
 };
 
 export type AnalyticsEventName = keyof AnalyticsEventMap;
