@@ -24,7 +24,7 @@ export default async function AccountDashboardPage() {
 
   if (!user) {
     if (hasSessionCookie) {
-      redirect("/api/auth/logout?redirectTo=%2Fkonto%2Fanmelden");
+      redirect("/konto/anmelden?reauth=1");
     }
 
     redirect("/konto/anmelden");

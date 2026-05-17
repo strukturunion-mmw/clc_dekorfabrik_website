@@ -14,7 +14,8 @@ function isPublicAuthPath(pathname: string) {
 }
 
 export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
+  const reauthRequested = searchParams.get("reauth") === "1";
 
   if (!isProtectedPath(pathname)) {
     return NextResponse.next();
@@ -29,7 +30,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  if (hasSession && isPublicAuthPath(pathname)) {
+  if (hasSession && isPublicAuthPath(pathname) && !reauthRequested) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/konto";
 
