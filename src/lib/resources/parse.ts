@@ -66,8 +66,15 @@ function parseResourceDates(rawValue: string, field: "publishDate" | "updatedDat
     );
   }
 
-  const parsed = new Date(`${rawValue}T00:00:00Z`);
-  if (Number.isNaN(parsed.getTime())) {
+  const [year, month, day] = rawValue.split("-").map(Number);
+  const parsed = new Date(Date.UTC(year, month - 1, day));
+
+  const isSameCalendarDate =
+    parsed.getUTCFullYear() === year &&
+    parsed.getUTCMonth() === month - 1 &&
+    parsed.getUTCDate() === day;
+
+  if (Number.isNaN(parsed.getTime()) || !isSameCalendarDate) {
     throw new Error(`Resource "${sourceSlug}" has invalid ${field} "${rawValue}".`);
   }
 
