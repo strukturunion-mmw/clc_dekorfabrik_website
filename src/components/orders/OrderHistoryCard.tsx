@@ -6,9 +6,10 @@ import { DownloadFileButton } from "./DownloadFileButton";
 
 type OrderHistoryCardProps = {
   order: OrderSummary;
+  onOpenDetails: () => void;
 };
 
-export function OrderHistoryCard({ order }: OrderHistoryCardProps) {
+export function OrderHistoryCard({ order, onOpenDetails }: OrderHistoryCardProps) {
   const statusMeta = ORDER_STATUS_META[order.status];
 
   return (
@@ -27,7 +28,14 @@ export function OrderHistoryCard({ order }: OrderHistoryCardProps) {
         </Pill>
       </div>
 
-      <details className="mt-5 rounded-lg border border-ink-200/70 bg-paper-100 p-4">
+      <details
+        className="mt-5 rounded-lg border border-ink-200/70 bg-paper-100 p-4"
+        onToggle={(event) => {
+          if (event.currentTarget.open) {
+            onOpenDetails();
+          }
+        }}
+      >
         <summary className="cursor-pointer font-sans text-sm font-semibold text-navy-900">
           Auftragsdetails und Dateien anzeigen
         </summary>
