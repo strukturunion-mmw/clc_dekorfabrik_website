@@ -54,11 +54,13 @@ export async function getCurrentSessionUser() {
   const session = findSession(token);
 
   if (!session) {
+    cookieStore.delete(AUTH_SESSION_COOKIE_NAME);
     return null;
   }
 
   if (new Date(session.expiresAt).getTime() <= Date.now()) {
     deleteSession(token);
+    cookieStore.delete(AUTH_SESSION_COOKIE_NAME);
     return null;
   }
 
@@ -66,6 +68,7 @@ export async function getCurrentSessionUser() {
 
   if (!user) {
     deleteSession(token);
+    cookieStore.delete(AUTH_SESSION_COOKIE_NAME);
     return null;
   }
 

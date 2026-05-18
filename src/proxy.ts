@@ -3,8 +3,7 @@ import type { NextRequest } from "next/server";
 import { AUTH_SESSION_COOKIE_NAME } from "@/lib/auth/constants";
 
 const PROTECTED_PATH_PREFIXES = ["/konto"];
-const LOGIN_PATH = "/konto/anmelden";
-const PUBLIC_AUTH_PATHS = [LOGIN_PATH, "/konto/registrieren"];
+const PUBLIC_AUTH_PATHS = ["/konto/anmelden", "/konto/registrieren"];
 
 function isProtectedPath(pathname: string) {
   return PROTECTED_PATH_PREFIXES.some((prefix) => pathname.startsWith(prefix));
@@ -14,13 +13,8 @@ function isPublicAuthPath(pathname: string) {
   return PUBLIC_AUTH_PATHS.some((path) => pathname === path);
 }
 
-function isLoginPath(pathname: string) {
-  return pathname === LOGIN_PATH;
-}
-
 export function proxy(request: NextRequest) {
-  const { pathname, searchParams } = request.nextUrl;
-  const reauthRequested = searchParams.get("reauth") === "1";
+  const { pathname } = request.nextUrl;
 
   if (!isProtectedPath(pathname)) {
     return NextResponse.next();
@@ -35,7 +29,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  if (hasSession && isLoginPath(pathname) && !reauthRequested) {
+  if (hasSession && isPublicAuthPath(pathname)) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/konto";
 

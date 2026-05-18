@@ -40,6 +40,24 @@ export type AnalyticsEventMap = {
   login_completed: {
     entryPath: string;
   };
+  order_opened: {
+    orderId: string;
+    orderReference: string;
+    orderStatus: string;
+  };
+  download_clicked: {
+    orderId: string;
+    orderReference: string;
+    fileId: string;
+    fileName: string;
+  };
+  download_completed: {
+    orderId: string;
+    orderReference: string;
+    fileId: string;
+    fileName: string;
+    fileSizeBytes: number;
+  };
 };
 
 export type AnalyticsEventName = keyof AnalyticsEventMap;
