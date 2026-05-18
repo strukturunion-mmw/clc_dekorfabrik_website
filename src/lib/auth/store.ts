@@ -1,38 +1,80 @@
 import { randomUUID } from "node:crypto";
+import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import path from "node:path";
 import type { AuthUser, SafeAuthUser, SessionRecord } from "./types";
 
-type AuthStore = {
-  usersByEmail: Map<string, AuthUser>;
-  sessionsByToken: Map<string, SessionRecord>;
+type PersistedAuthStore = {
+  users: AuthUser[];
+  sessions: SessionRecord[];
 };
 
-const globalForAuth = globalThis as typeof globalThis & {
-  __dekorfabrikAuthStore?: AuthStore;
-};
+const runtimeStoreDir =
+  process.env.DEKORFABRIK_RUNTIME_STORE_DIR?.trim() || "/tmp/dekorfabrik-runtime-store";
+const authStorePath = path.join(runtimeStoreDir, "auth-store.json");
 
-function getStore(): AuthStore {
-  if (!globalForAuth.__dekorfabrikAuthStore) {
-    globalForAuth.__dekorfabrikAuthStore = {
-      usersByEmail: new Map<string, AuthUser>(),
-      sessionsByToken: new Map<string, SessionRecord>(),
+function ensureRuntimeStoreDir() {
+  mkdirSync(runtimeStoreDir, { recursive: true });
+}
+
+function readStore(): PersistedAuthStore {
+  ensureRuntimeStoreDir();
+
+  if (!existsSync(authStorePath)) {
+    return {
+      users: [],
+      sessions: [],
     };
   }
 
-  return globalForAuth.__dekorfabrikAuthStore;
+  try {
+    const raw = readFileSync(authStorePath, "utf8");
+    const parsed: unknown = JSON.parse(raw);
+
+    if (!parsed || typeof parsed !== "object") {
+      return {
+        users: [],
+        sessions: [],
+      };
+    }
+
+    const users = Array.isArray((parsed as PersistedAuthStore).users)
+      ? (parsed as PersistedAuthStore).users
+      : [];
+    const sessions = Array.isArray((parsed as PersistedAuthStore).sessions)
+      ? (parsed as PersistedAuthStore).sessions
+      : [];
+
+    return {
+      users,
+      sessions,
+    };
+  } catch {
+    return {
+      users: [],
+      sessions: [],
+    };
+  }
+}
+
+function writeStore(store: PersistedAuthStore) {
+  ensureRuntimeStoreDir();
+  const tmpPath = `${authStorePath}.${process.pid}.tmp`;
+
+  writeFileSync(tmpPath, JSON.stringify(store), "utf8");
+  renameSync(tmpPath, authStorePath);
+}
+
+function toEmailKey(email: string) {
+  return email.trim().toLowerCase();
 }
 
 export function findUserByEmail(email: string) {
-  return getStore().usersByEmail.get(email.toLowerCase());
+  const emailKey = toEmailKey(email);
+  return readStore().users.find((user) => user.email === emailKey);
 }
 
 export function findUserById(userId: string) {
-  for (const user of getStore().usersByEmail.values()) {
-    if (user.id === userId) {
-      return user;
-    }
-  }
-
-  return null;
+  return readStore().users.find((user) => user.id === userId) ?? null;
 }
 
 export function createUser(input: {
@@ -40,7 +82,8 @@ export function createUser(input: {
   fullName: string;
   passwordHash: string;
 }) {
-  const email = input.email.toLowerCase();
+  const store = readStore();
+  const email = toEmailKey(input.email);
 
   const user: AuthUser = {
     id: randomUUID(),
@@ -50,7 +93,8 @@ export function createUser(input: {
     createdAt: new Date().toISOString(),
   };
 
-  getStore().usersByEmail.set(email, user);
+  store.users.push(user);
+  writeStore(store);
 
   return user;
 }
@@ -60,6 +104,8 @@ export function createSession(input: {
   userId: string;
   expiresAt: string;
 }) {
+  const store = readStore();
+
   const record: SessionRecord = {
     token: input.token,
     userId: input.userId,
@@ -67,17 +113,27 @@ export function createSession(input: {
     expiresAt: input.expiresAt,
   };
 
-  getStore().sessionsByToken.set(input.token, record);
+  store.sessions = store.sessions.filter((candidate) => candidate.token !== input.token);
+  store.sessions.push(record);
+  writeStore(store);
 
   return record;
 }
 
 export function findSession(token: string) {
-  return getStore().sessionsByToken.get(token);
+  return readStore().sessions.find((session) => session.token === token);
 }
 
 export function deleteSession(token: string) {
-  getStore().sessionsByToken.delete(token);
+  const store = readStore();
+  const nextSessions = store.sessions.filter((session) => session.token !== token);
+
+  if (nextSessions.length === store.sessions.length) {
+    return;
+  }
+
+  store.sessions = nextSessions;
+  writeStore(store);
 }
 
 export function sanitizeUser(user: AuthUser): SafeAuthUser {

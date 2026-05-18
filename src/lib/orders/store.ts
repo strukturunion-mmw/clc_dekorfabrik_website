@@ -1,23 +1,69 @@
 import { randomUUID } from "node:crypto";
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import path from "node:path";
 import type { SafeAuthUser } from "@/lib/auth/types";
 import type { OrderRecord, OrderSummary } from "./types";
 
-type OrdersStore = {
-  ordersByUserId: Map<string, OrderRecord[]>;
+type PersistedOrdersStore = {
+  ordersByUserId: Record<string, OrderRecord[]>;
 };
 
-const globalForOrders = globalThis as typeof globalThis & {
-  __dekorfabrikOrdersStore?: OrdersStore;
-};
+const runtimeStoreDir =
+  process.env.DEKORFABRIK_RUNTIME_STORE_DIR?.trim() || "/tmp/dekorfabrik-runtime-store";
+const ordersStorePath = path.join(runtimeStoreDir, "orders-store.json");
 
-function getStore(): OrdersStore {
-  if (!globalForOrders.__dekorfabrikOrdersStore) {
-    globalForOrders.__dekorfabrikOrdersStore = {
-      ordersByUserId: new Map<string, OrderRecord[]>(),
+function ensureRuntimeStoreDir() {
+  mkdirSync(runtimeStoreDir, { recursive: true });
+}
+
+function readStore(): PersistedOrdersStore {
+  ensureRuntimeStoreDir();
+
+  if (!existsSync(ordersStorePath)) {
+    return {
+      ordersByUserId: {},
     };
   }
 
-  return globalForOrders.__dekorfabrikOrdersStore;
+  try {
+    const raw = readFileSync(ordersStorePath, "utf8");
+    const parsed: unknown = JSON.parse(raw);
+
+    if (!parsed || typeof parsed !== "object") {
+      return {
+        ordersByUserId: {},
+      };
+    }
+
+    const ordersByUserId = (parsed as PersistedOrdersStore).ordersByUserId;
+
+    return {
+      ordersByUserId:
+        ordersByUserId && typeof ordersByUserId === "object" && !Array.isArray(ordersByUserId)
+          ? ordersByUserId
+          : {},
+    };
+  } catch {
+    return {
+      ordersByUserId: {},
+    };
+  }
+}
+
+function writeStore(store: PersistedOrdersStore) {
+  ensureRuntimeStoreDir();
+  const tmpPath = `${ordersStorePath}.${process.pid}.tmp`;
+
+  writeFileSync(tmpPath, JSON.stringify(store), "utf8");
+  renameSync(tmpPath, ordersStorePath);
+}
+
+function makeStableSeedId(userId: string, reference: string, fileName: string) {
+  return createHash("sha256")
+    .update(`${userId}:${reference}:${fileName}`)
+    .digest("hex")
+    .slice(0, 32);
 }
 
 function withSortedOrders(records: OrderRecord[]) {
@@ -61,7 +107,7 @@ function makeOrderSeed(user: SafeAuthUser): Omit<OrderRecord, "id">[] {
       updatedAt: "2026-05-03T15:20:00.000Z",
       files: [
         {
-          id: randomUUID(),
+          id: makeStableSeedId(user.id, `DF-${new Date().getFullYear()}-1042`, `Logo-${firstName}-Final.ai`),
           fileName: `Logo-${firstName}-Final.ai`,
           formatLabel: "Adobe Illustrator (.ai)",
           mimeType: "application/postscript",
@@ -71,7 +117,7 @@ function makeOrderSeed(user: SafeAuthUser): Omit<OrderRecord, "id">[] {
           downloadContent: `Dekorfabrik Demo-Datei: Logo Final für ${user.fullName}`,
         },
         {
-          id: randomUUID(),
+          id: makeStableSeedId(user.id, `DF-${new Date().getFullYear()}-1042`, `Logo-${firstName}-Print.pdf`),
           fileName: `Logo-${firstName}-Print.pdf`,
           formatLabel: "PDF Druckvorlage",
           mimeType: "application/pdf",
@@ -90,7 +136,11 @@ function makeOrderSeed(user: SafeAuthUser): Omit<OrderRecord, "id">[] {
       updatedAt: "2026-05-15T13:05:00.000Z",
       files: [
         {
-          id: randomUUID(),
+          id: makeStableSeedId(
+            user.id,
+            `DF-${new Date().getFullYear()}-1091`,
+            `Stickdatei-${firstName}-Preview.dst`,
+          ),
           fileName: `Stickdatei-${firstName}-Preview.dst`,
           formatLabel: "Tajima DST",
           mimeType: "application/octet-stream",
@@ -105,18 +155,19 @@ function makeOrderSeed(user: SafeAuthUser): Omit<OrderRecord, "id">[] {
 }
 
 function ensureOrdersForUser(user: SafeAuthUser) {
-  const store = getStore();
+  const store = readStore();
 
-  if (!store.ordersByUserId.has(user.id)) {
+  if (!store.ordersByUserId[user.id]) {
     const seeded = makeOrderSeed(user).map((order) => ({
       ...order,
       id: randomUUID(),
     }));
 
-    store.ordersByUserId.set(user.id, seeded);
+    store.ordersByUserId[user.id] = seeded;
+    writeStore(store);
   }
 
-  return store.ordersByUserId.get(user.id) ?? [];
+  return store.ordersByUserId[user.id] ?? [];
 }
 
 export function getOrdersForUser(user: SafeAuthUser): OrderSummary[] {
