@@ -67,7 +67,7 @@ function parseResourceDates(rawValue: string, field: "publishDate" | "updatedDat
   }
 
   const [year, month, day] = rawValue.split("-").map(Number);
-  const parsed = new Date(Date.UTC(year, month - 1, day));
+  const parsed = new Date(`${rawValue}T00:00:00Z`);
 
   const isSameCalendarDate =
     parsed.getUTCFullYear() === year &&
