@@ -17,6 +17,28 @@ const LOCK_RETRY_MS = 25;
 const STALE_LOCK_MS = 30000;
 const sleepArray = new Int32Array(new SharedArrayBuffer(4));
 
+function parseLockOwnerPid(lockOwnerToken: string) {
+  const [pidPart] = lockOwnerToken.split(":", 1);
+  const pid = Number.parseInt(pidPart, 10);
+
+  if (!Number.isInteger(pid) || pid <= 0) {
+    return null;
+  }
+
+  return pid;
+}
+
+function isProcessAlive(pid: number) {
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+
+    return code === "EPERM";
+  }
+}
+
 function sleepMs(ms: number) {
   Atomics.wait(sleepArray, 0, 0, ms);
 }
@@ -118,8 +140,12 @@ function acquireStoreLock() {
         const lockAgeMs = Date.now() - statSync(authStoreLockPath).mtimeMs;
 
         if (lockAgeMs > STALE_LOCK_MS) {
-          unlinkSync(authStoreLockPath);
-          continue;
+          const lockOwnerPid = parseLockOwnerPid(readFileSync(authStoreLockPath, "utf8").trim());
+
+          if (lockOwnerPid === null || !isProcessAlive(lockOwnerPid)) {
+            unlinkSync(authStoreLockPath);
+            continue;
+          }
         }
       } catch (staleCheckError) {
         const staleCheckCode = (staleCheckError as NodeJS.ErrnoException).code;
