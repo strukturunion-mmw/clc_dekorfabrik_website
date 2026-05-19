@@ -97,15 +97,16 @@ function writeStore(store: PersistedAuthStore) {
 function acquireStoreLock() {
   ensureRuntimeStoreDir();
   const deadline = Date.now() + LOCK_TIMEOUT_MS;
+  const lockOwnerToken = `${process.pid}:${randomUUID()}`;
 
   while (true) {
     try {
-      writeFileSync(authStoreLockPath, `${process.pid}`, {
+      writeFileSync(authStoreLockPath, lockOwnerToken, {
         encoding: "utf8",
         flag: "wx",
         mode: 0o600,
       });
-      return;
+      return lockOwnerToken;
     } catch (error) {
       const code = (error as NodeJS.ErrnoException).code;
 
@@ -139,8 +140,14 @@ function acquireStoreLock() {
   }
 }
 
-function releaseStoreLock() {
+function releaseStoreLock(lockOwnerToken: string) {
   try {
+    const currentLockOwnerToken = readFileSync(authStoreLockPath, "utf8").trim();
+
+    if (currentLockOwnerToken !== lockOwnerToken) {
+      return;
+    }
+
     unlinkSync(authStoreLockPath);
   } catch (error) {
     const code = (error as NodeJS.ErrnoException).code;
@@ -152,12 +159,12 @@ function releaseStoreLock() {
 }
 
 function withStoreLock<T>(operation: () => T): T {
-  acquireStoreLock();
+  const lockOwnerToken = acquireStoreLock();
 
   try {
     return operation();
   } finally {
-    releaseStoreLock();
+    releaseStoreLock(lockOwnerToken);
   }
 }
 
