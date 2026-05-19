@@ -17,15 +17,49 @@ const LOCK_RETRY_MS = 25;
 const STALE_LOCK_MS = 30000;
 const sleepArray = new Int32Array(new SharedArrayBuffer(4));
 
-function parseLockOwnerPid(lockOwnerToken: string) {
-  const [pidPart] = lockOwnerToken.split(":", 1);
+type ParsedLockOwnerToken = {
+  pid: number | null;
+  processStartTicks: string | null;
+};
+
+function parseLockOwnerToken(lockOwnerToken: string): ParsedLockOwnerToken {
+  const [pidPart, processStartTicksPart] = lockOwnerToken.split(":", 3);
   const pid = Number.parseInt(pidPart, 10);
 
   if (!Number.isInteger(pid) || pid <= 0) {
-    return null;
+    return {
+      pid: null,
+      processStartTicks: null,
+    };
   }
 
-  return pid;
+  return {
+    pid,
+    processStartTicks:
+      processStartTicksPart && /^\d+$/.test(processStartTicksPart) ? processStartTicksPart : null,
+  };
+}
+
+function readLinuxProcessStartTicks(pid: number) {
+  try {
+    const statContent = readFileSync(`/proc/${pid}/stat`, "utf8");
+    const commandEndIndex = statContent.lastIndexOf(")");
+
+    if (commandEndIndex === -1) {
+      return null;
+    }
+
+    const fields = statContent.slice(commandEndIndex + 2).trim().split(/\s+/);
+    const processStartTicks = fields[19];
+
+    if (!processStartTicks || !/^\d+$/.test(processStartTicks)) {
+      return null;
+    }
+
+    return processStartTicks;
+  } catch {
+    return null;
+  }
 }
 
 function isProcessAlive(pid: number) {
@@ -119,7 +153,8 @@ function writeStore(store: PersistedAuthStore) {
 function acquireStoreLock() {
   ensureRuntimeStoreDir();
   const deadline = Date.now() + LOCK_TIMEOUT_MS;
-  const lockOwnerToken = `${process.pid}:${randomUUID()}`;
+  const processStartTicks = readLinuxProcessStartTicks(process.pid) ?? "na";
+  const lockOwnerToken = `${process.pid}:${processStartTicks}:${randomUUID()}`;
 
   while (true) {
     try {
@@ -140,11 +175,23 @@ function acquireStoreLock() {
         const lockAgeMs = Date.now() - statSync(authStoreLockPath).mtimeMs;
 
         if (lockAgeMs > STALE_LOCK_MS) {
-          const lockOwnerPid = parseLockOwnerPid(readFileSync(authStoreLockPath, "utf8").trim());
+          const parsedLockOwner = parseLockOwnerToken(readFileSync(authStoreLockPath, "utf8").trim());
 
-          if (lockOwnerPid === null || !isProcessAlive(lockOwnerPid)) {
+          if (parsedLockOwner.pid === null || !isProcessAlive(parsedLockOwner.pid)) {
             unlinkSync(authStoreLockPath);
             continue;
+          }
+
+          if (parsedLockOwner.processStartTicks !== null) {
+            const currentProcessStartTicks = readLinuxProcessStartTicks(parsedLockOwner.pid);
+
+            if (
+              currentProcessStartTicks === null ||
+              currentProcessStartTicks !== parsedLockOwner.processStartTicks
+            ) {
+              unlinkSync(authStoreLockPath);
+              continue;
+            }
           }
         }
       } catch (staleCheckError) {
