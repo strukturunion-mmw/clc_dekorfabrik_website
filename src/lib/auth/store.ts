@@ -186,7 +186,7 @@ function acquireStoreLock() {
             const currentProcessStartTicks = readLinuxProcessStartTicks(parsedLockOwner.pid);
 
             if (
-              currentProcessStartTicks === null ||
+              currentProcessStartTicks !== null &&
               currentProcessStartTicks !== parsedLockOwner.processStartTicks
             ) {
               unlinkSync(authStoreLockPath);
