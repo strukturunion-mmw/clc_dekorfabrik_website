@@ -1,5 +1,9 @@
 import { ORDER_REVISION_REQUEST_STATUS_META, ORDER_STATUS_META } from "./status";
-import type { OrderActivityRecord, OrderSummary } from "./types";
+import type {
+  OrderActivityRecord,
+  OrderRevisionRequestStatus,
+  OrderSummary,
+} from "./types";
 
 type OrderTimelineItem = {
   id: string;
@@ -27,13 +31,19 @@ export function getOrderTimeline(order: OrderSummary): OrderTimelineItem[] {
       };
     }
 
+    const matchedRequest = order.revisionRequests.find(
+      (request) => request.requestedAt === activity.timestamp,
+    );
+    const revisionStatus: OrderRevisionRequestStatus =
+      matchedRequest?.status ?? "in_pruefung";
+
     return {
       id: activity.id,
       timestamp: activity.timestamp,
       title: activity.title,
       message: activity.message,
       kind: activity.kind,
-      statusLabel: ORDER_REVISION_REQUEST_STATUS_META.in_pruefung.label,
+      statusLabel: ORDER_REVISION_REQUEST_STATUS_META[revisionStatus].label,
     };
   });
 
