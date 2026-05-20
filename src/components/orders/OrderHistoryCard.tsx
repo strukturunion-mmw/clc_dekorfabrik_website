@@ -1,15 +1,40 @@
+"use client";
+
+import { useState } from "react";
 import { Pill } from "@/components/ui/Pill";
 import { ORDER_STATUS_META } from "@/lib/orders/status";
 import { formatOrderDate, formatOrderDateTime, formatFileSize } from "@/lib/orders/format";
 import type { OrderSummary } from "@/lib/orders/types";
 import { DownloadFileButton } from "./DownloadFileButton";
+import { OrderRevisionForm } from "./OrderRevisionForm";
+import { OrderStatusTimeline } from "./OrderStatusTimeline";
 
 type OrderHistoryCardProps = {
   order: OrderSummary;
   onOpenDetails: () => void;
+  onRevisionRequested: (payload: {
+    orderId: string;
+    orderReference: string;
+    orderStatus: string;
+    priority: string;
+    hasAttachmentReference: boolean;
+  }) => void;
+  onRevisionRequestFailed: (payload: {
+    orderId: string;
+    orderReference: string;
+    orderStatus: string;
+    reason: string;
+    statusCode?: number;
+  }) => void;
 };
 
-export function OrderHistoryCard({ order, onOpenDetails }: OrderHistoryCardProps) {
+export function OrderHistoryCard({
+  order,
+  onOpenDetails,
+  onRevisionRequested,
+  onRevisionRequestFailed,
+}: OrderHistoryCardProps) {
+  const [revisionFormKey, setRevisionFormKey] = useState(0);
   const statusMeta = ORDER_STATUS_META[order.status];
 
   return (
@@ -77,11 +102,37 @@ export function OrderHistoryCard({ order, onOpenDetails }: OrderHistoryCardProps
             );
           })}
         </ul>
+
+        <OrderStatusTimeline order={order} />
+
+        <OrderRevisionForm
+          key={`${order.id}:${revisionFormKey}`}
+          order={order}
+          onSubmitted={(payload) => {
+            onRevisionRequested({
+              orderId: payload.orderId,
+              orderReference: order.reference,
+              orderStatus: order.status,
+              priority: payload.priority,
+              hasAttachmentReference: payload.hadAttachmentReference,
+            });
+            setRevisionFormKey((current) => current + 1);
+          }}
+          onSubmitFailed={(payload) => {
+            onRevisionRequestFailed({
+              orderId: payload.orderId,
+              orderReference: order.reference,
+              orderStatus: order.status,
+              reason: payload.reason,
+              statusCode: payload.statusCode,
+            });
+          }}
+        />
       </details>
 
       <p className="mt-4 rounded-lg border border-ink-200/70 bg-paper-100 px-4 py-3 font-sans text-sm text-navy-700">
         {statusMeta.canRequestRevision
-          ? "Revisionsanfragen sind in der nächsten Ausbaustufe (E5-US3) direkt hier möglich."
+          ? "Revisionsanfragen sind für diesen Auftrag verfügbar. Nutzen Sie das Formular in den Auftragsdetails."
           : "Revisionsanfragen sind für diesen Status noch nicht verfügbar. Sie sehen die Funktion automatisch, sobald der Auftrag den passenden Bearbeitungsstand erreicht."}
       </p>
     </article>

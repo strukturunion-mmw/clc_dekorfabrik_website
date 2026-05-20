@@ -1,5 +1,9 @@
 export type OrderStatus = "eingegangen" | "in_bearbeitung" | "rueckfrage" | "abgeschlossen";
 
+export type OrderRevisionPriority = "niedrig" | "normal" | "hoch";
+
+export type OrderRevisionRequestStatus = "eingereicht" | "in_pruefung";
+
 export type OrderFileRecord = {
   id: string;
   fileName: string;
@@ -11,6 +15,34 @@ export type OrderFileRecord = {
   downloadContent: string;
 };
 
+export type OrderRevisionRequestRecord = {
+  id: string;
+  requestedAt: string;
+  description: string;
+  attachmentReference: string | null;
+  priority: OrderRevisionPriority;
+  status: OrderRevisionRequestStatus;
+};
+
+export type OrderStatusActivityRecord = {
+  id: string;
+  timestamp: string;
+  kind: "status";
+  status: OrderStatus;
+  title: string;
+  message: string;
+};
+
+export type OrderRevisionActivityRecord = {
+  id: string;
+  timestamp: string;
+  kind: "revision";
+  title: string;
+  message: string;
+};
+
+export type OrderActivityRecord = OrderStatusActivityRecord | OrderRevisionActivityRecord;
+
 export type OrderRecord = {
   id: string;
   reference: string;
@@ -19,6 +51,8 @@ export type OrderRecord = {
   createdAt: string;
   updatedAt: string;
   files: OrderFileRecord[];
+  revisionRequests: OrderRevisionRequestRecord[];
+  activity: OrderActivityRecord[];
 };
 
 export type OrderFileSummary = Omit<OrderFileRecord, "downloadContent">;

@@ -45,6 +45,25 @@ export type AnalyticsEventMap = {
     orderReference: string;
     orderStatus: string;
   };
+  status_viewed: {
+    orderId: string;
+    orderReference: string;
+    orderStatus: string;
+  };
+  revision_requested: {
+    orderId: string;
+    orderReference: string;
+    orderStatus: string;
+    priority: string;
+    hasAttachmentReference: boolean;
+  };
+  revision_request_failed: {
+    orderId: string;
+    orderReference: string;
+    orderStatus: string;
+    reason: string;
+    statusCode?: number;
+  };
   download_clicked: {
     orderId: string;
     orderReference: string;
