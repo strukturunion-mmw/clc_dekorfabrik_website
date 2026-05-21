@@ -162,7 +162,26 @@ export default function PrivacyPage() {
         gelöscht oder datenschutzgerecht eingeschränkt verarbeitet.
       </p>
 
-      <h2>10. Ihre Rechte</h2>
+      <h2>10. Kundenkonto und DSGVO-Rechte im Portal</h2>
+      <p>
+        Für die Registrierung im Kundenportal verarbeiten wir Ihren Namen,
+        Ihre E-Mail-Adresse, ein gehashtes Passwort sowie die dokumentierte
+        Zustimmung zur Datenschutzerklärung mit Zeitstempel und
+        Policy-Version-Referenz. Diese Dokumentation dient der Nachvollziehbarkeit
+        der erteilten Einwilligung und der transparenten Kontoführung.
+      </p>
+      <p>
+        Im Kundenportal stellen wir außerdem direkte Einstiegspunkte für
+        Datenexport- und Löschanfragen bereit. Eingereichte Anfragen werden mit
+        Anfragezeitpunkt, Anfragetyp und Policy-Version protokolliert und
+        anschließend manuell bearbeitet.
+      </p>
+      <p>
+        Bitte teilen Sie in Freitextfeldern nur die Daten mit, die zur
+        Zuordnung Ihrer Anfrage erforderlich sind (Datenminimierung).
+      </p>
+
+      <h2>11. Ihre Rechte</h2>
       <p>Sie haben nach Maßgabe der gesetzlichen Voraussetzungen insbesondere das Recht auf:</p>
       <ul>
         <li>Auskunft über Ihre bei uns gespeicherten Daten,</li>
@@ -173,7 +192,7 @@ export default function PrivacyPage() {
         <li>und Widerruf einer erteilten Einwilligung mit Wirkung für die Zukunft.</li>
       </ul>
 
-      <h2>11. Beschwerderecht bei der Aufsichtsbehörde</h2>
+      <h2>12. Beschwerderecht bei der Aufsichtsbehörde</h2>
       <p>
         Sie können sich bei einer Datenschutzaufsichtsbehörde beschweren. Für
         nicht öffentliche Stellen in Hessen ist nach aktuellem Stand zuständig:
@@ -190,7 +209,7 @@ export default function PrivacyPage() {
         </a>
       </p>
 
-      <h2>12. Keine automatisierte Entscheidungsfindung</h2>
+      <h2>13. Keine automatisierte Entscheidungsfindung</h2>
       <p>
         Eine automatisierte Entscheidungsfindung einschließlich Profiling im
         Sinne von Art. 22 DSGVO findet nach aktuellem Implementierungsstand

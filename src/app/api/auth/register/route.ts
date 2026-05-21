@@ -1,4 +1,5 @@
 import { createUserSession } from "@/lib/auth/session";
+import { AUTH_CONSENT_POLICY_VERSION } from "@/lib/auth/constants";
 import { AuthError, registerUser } from "@/lib/auth/server";
 import {
   getRegisterValues,
@@ -22,6 +23,8 @@ export async function POST(request: Request) {
       fullName: values.fullName,
       email: values.email,
       password: values.password,
+      consentGrantedAt: new Date().toISOString(),
+      consentPolicyVersion: AUTH_CONSENT_POLICY_VERSION,
     });
 
     await createUserSession(user.id);

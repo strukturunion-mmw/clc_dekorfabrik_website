@@ -136,7 +136,8 @@ export function RegisterForm() {
             aria-describedby={fieldErrors.consent ? "register-consent-error" : undefined}
           />
           <span>
-            Ich stimme zu, dass meine Kontodaten für die Portalnutzung verarbeitet werden.
+            Ich stimme zu, dass meine Kontodaten für die Portalnutzung verarbeitet und mein Zustimmungszeitpunkt
+            sowie die Version der Datenschutzhinweise dokumentiert werden.
             Details stehen in der <a className="underline" href="/datenschutz">Datenschutzerklärung</a>.
           </span>
         </label>

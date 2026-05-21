@@ -68,6 +68,21 @@ export function validateOrderRevisionInput(order: OrderSummary, input: OrderRevi
     errors.attachmentReference = `Bitte halten Sie den Dateihinweis unter ${ORDER_REVISION_ATTACHMENT_REFERENCE_MAX_LENGTH} Zeichen.`;
   }
 
+  if (/\b\d{2}\.\d{2}\.\d{4}\b/.test(input.description) || /\b\d{2}\/\d{2}\/\d{4}\b/.test(input.description)) {
+    errors.description =
+      "Bitte vermeiden Sie unnötige personenbezogene Angaben wie konkrete Datumsangaben in der Revisionsbeschreibung.";
+  }
+
+  if (/\b\+?\d[\d\s/().-]{7,}\d\b/.test(input.description)) {
+    errors.description =
+      "Bitte vermeiden Sie unnötige personenbezogene Angaben wie Telefonnummern in der Revisionsbeschreibung.";
+  }
+
+  if (/\b[^\s@]+@[^\s@]+\.[^\s@]+\b/.test(input.description)) {
+    errors.description =
+      "Bitte vermeiden Sie unnötige personenbezogene Angaben wie E-Mail-Adressen in der Revisionsbeschreibung.";
+  }
+
   const latestRequest = order.revisionRequests[0];
 
   if (latestRequest) {
