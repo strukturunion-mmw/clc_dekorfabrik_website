@@ -79,7 +79,7 @@ export function validateRegisterValues(values: RegisterValues): AuthFieldErrors 
 
   if (!values.consent) {
     errors.consent =
-      "Bitte bestätigen Sie die Verarbeitung Ihrer Kontodaten gemäß Datenschutzerklärung.";
+      "Bitte bestätigen Sie die Verarbeitung Ihrer Kontodaten inklusive Dokumentation von Zeitpunkt und Policy-Version gemäß Datenschutzerklärung.";
   }
 
   return errors;

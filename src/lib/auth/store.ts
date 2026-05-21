@@ -258,6 +258,8 @@ export function createUser(input: {
   email: string;
   fullName: string;
   passwordHash: string;
+  consentGrantedAt: string;
+  consentPolicyVersion: string;
 }) {
   return withStoreLock(() => {
     const store = readStore();
@@ -269,6 +271,8 @@ export function createUser(input: {
       fullName: input.fullName,
       passwordHash: input.passwordHash,
       createdAt: new Date().toISOString(),
+      consentGrantedAt: input.consentGrantedAt,
+      consentPolicyVersion: input.consentPolicyVersion,
     };
 
     store.users.push(user);
@@ -325,5 +329,7 @@ export function sanitizeUser(user: AuthUser): SafeAuthUser {
     email: user.email,
     fullName: user.fullName,
     createdAt: user.createdAt,
+    consentGrantedAt: user.consentGrantedAt ?? null,
+    consentPolicyVersion: user.consentPolicyVersion ?? null,
   };
 }

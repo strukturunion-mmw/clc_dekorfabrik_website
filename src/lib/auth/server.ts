@@ -16,6 +16,8 @@ export function registerUser(input: {
   fullName: string;
   email: string;
   password: string;
+  consentGrantedAt: string;
+  consentPolicyVersion: string;
 }): SafeAuthUser {
   const existingUser = findUserByEmail(input.email);
 
@@ -30,6 +32,8 @@ export function registerUser(input: {
     fullName: input.fullName,
     email: input.email,
     passwordHash: hashPassword(input.password),
+    consentGrantedAt: input.consentGrantedAt,
+    consentPolicyVersion: input.consentPolicyVersion,
   });
 
   return sanitizeUser(user);

@@ -8,6 +8,8 @@ import { createPageMetadata } from "@/lib/metadata";
 import { getCurrentSessionUser } from "@/lib/auth/session";
 import { getOrdersForUser } from "@/lib/orders/store";
 import { OrderHistoryErrorState } from "@/components/orders/OrderHistoryErrorState";
+import { DataRightsPanel } from "@/components/account/DataRightsPanel";
+import { getDataRightsRequestsForUser } from "@/lib/account/dataRightsStore";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Mein Konto",
@@ -36,6 +38,7 @@ export default async function AccountDashboardPage({ searchParams }: AccountDash
   const downloadError = downloadErrorRaw ?? "";
 
   const orders = getOrdersForUser(user);
+  const dataRightsRequests = getDataRightsRequestsForUser(user.id);
 
   return (
     <PageShell>
@@ -60,6 +63,8 @@ export default async function AccountDashboardPage({ searchParams }: AccountDash
             {downloadError ? <OrderHistoryErrorState body={downloadError} /> : null}
             {orders.length > 0 ? <OrderHistoryView orders={orders} /> : <OrderHistoryEmptyState />}
           </div>
+
+          <DataRightsPanel requests={dataRightsRequests} />
         </div>
       </section>
     </PageShell>

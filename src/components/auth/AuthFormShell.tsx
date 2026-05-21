@@ -41,6 +41,12 @@ export function AuthFormShell({
                 Rechtsgrundlagen und Datenverarbeitung: <Link href="/datenschutz" className="underline">Datenschutz</Link>.
               </span>
             </li>
+            <li className="flex gap-3">
+              <span aria-hidden="true">•</span>
+              <span>
+                Datenschutzrechte wie Export- und Löschanfragen können nach Login direkt im Kundenportal gestellt werden.
+              </span>
+            </li>
           </ul>
         </aside>
 
