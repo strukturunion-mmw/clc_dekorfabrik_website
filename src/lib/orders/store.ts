@@ -85,10 +85,29 @@ function withSortedOrders(records: OrderRecord[]) {
   });
 }
 
-function toOrderSummary(order: OrderRecord): OrderSummary {
+function normalizeOrderRecord(order: OrderRecord): OrderRecord {
+  const orderLike = order as OrderRecord & {
+    revisionRequests?: OrderRevisionRequestRecord[];
+    activity?: OrderActivityRecord[];
+  };
+
   return {
     ...order,
-    files: order.files.map((file) => ({
+    revisionRequests: Array.isArray(orderLike.revisionRequests)
+      ? orderLike.revisionRequests.map((request) => ({ ...request }))
+      : [],
+    activity: Array.isArray(orderLike.activity)
+      ? orderLike.activity.map((activity) => ({ ...activity }))
+      : [],
+  };
+}
+
+function toOrderSummary(order: OrderRecord): OrderSummary {
+  const normalizedOrder = normalizeOrderRecord(order);
+
+  return {
+    ...normalizedOrder,
+    files: normalizedOrder.files.map((file) => ({
       id: file.id,
       fileName: file.fileName,
       formatLabel: file.formatLabel,
@@ -97,8 +116,6 @@ function toOrderSummary(order: OrderRecord): OrderSummary {
       uploadedAt: file.uploadedAt,
       deliveredAt: file.deliveredAt,
     })),
-    revisionRequests: order.revisionRequests.map((request) => ({ ...request })),
-    activity: order.activity.map((activity) => ({ ...activity })),
   };
 }
 
@@ -254,7 +271,24 @@ function ensureOrdersForUser(user: SafeAuthUser) {
     writeStore(store);
   }
 
-  return store.ordersByUserId[user.id] ?? [];
+  const existingOrders = store.ordersByUserId[user.id] ?? [];
+  const hasLegacyShape = existingOrders.some((order) => {
+    const orderLike = order as OrderRecord & {
+      revisionRequests?: unknown;
+      activity?: unknown;
+    };
+
+    return !Array.isArray(orderLike.revisionRequests) || !Array.isArray(orderLike.activity);
+  });
+
+  const normalizedOrders = existingOrders.map(normalizeOrderRecord);
+
+  if (hasLegacyShape) {
+    store.ordersByUserId[user.id] = normalizedOrders;
+    writeStore(store);
+  }
+
+  return normalizedOrders;
 }
 
 export function getOrdersForUser(user: SafeAuthUser): OrderSummary[] {
@@ -343,7 +377,7 @@ export function submitRevisionRequestForUser(
     };
   }
 
-  const order = orders[orderIndex];
+  const order = normalizeOrderRecord(orders[orderIndex]);
 
   if (!ORDER_STATUS_META[order.status].canRequestRevision) {
     return {
